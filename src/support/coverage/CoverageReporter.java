@@ -1,4 +1,4 @@
-package support.coverage;
+package coverage;
 
 import org.jacoco.agent.rt.internal_e6e56f0.Agent;
 import org.jacoco.agent.rt.internal_e6e56f0.core.runtime.AgentOptions;
@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class CoverageReporter {
     private Agent agent = Agent.getInstance(new AgentOptions());
-//    agent = Agent.getInstance(AgentOptions("output=none,dumponexit=false,excludes=*,includes=$packagePrefix*"))
     private String originalFilePath = "classes";
     private String packagePrefix = "";
 
@@ -141,6 +140,10 @@ public class CoverageReporter {
     }
 
     private boolean isInPackage(IClassCoverage cc, String packagePrefix) {
+        if (packagePrefix.isEmpty()){
+            return true;
+        }
+        packagePrefix = packagePrefix.replace('.','/');
         String packageName = cc.getPackageName();
         boolean res = packageName.startsWith(packagePrefix);
         if (res == false){
@@ -149,7 +152,7 @@ public class CoverageReporter {
 
         int prefixLength = packagePrefix.length();
         if (packageName.length() > prefixLength){
-            res = ( packageName.charAt(prefixLength-1) == '.' );
+            res = ( packageName.charAt(prefixLength) == '/' );
         }
         return res;
     }

@@ -45,7 +45,7 @@
   </target>
 
   <target name="GetCoverage" depends="instrument">
-    <java classname="HelloWorld" fork="true">
+    <java classname="test.FastjsonDriver" fork="true">
       <classpath>
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
