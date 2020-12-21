@@ -21,11 +21,12 @@ package test.sixpath;
  * Contributor(s): none.
  *========================================================================*/
 
-import java.io.*;
+import de.fzi.XPath.Parser.ParseException;
+import de.fzi.XPath.Parser.XPathParser;
 
-import de.fzi.XPath.Parser.*;
-import gov.nasa.jpf.jdart.SymbolicString;
-import gov.nasa.jpf.symbc.Symbolic;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 public class TestSixpath extends Object {
 
@@ -43,7 +44,6 @@ public class TestSixpath extends Object {
   
   public void start() throws IOException{
 	  String s="f:r((a+q|a)[/]//b/c/d, 1)|a|node()";
-	  s = SymbolicString.makeConcolicString(s);
 	  System.out.println(s);
 
 	  Reader stream = new StringReader(s);
@@ -57,9 +57,6 @@ public class TestSixpath extends Object {
 		  //System.out.println("Parsed expression: " + expr); 
 	  }
 	  catch (ParseException e) {
-		  e.printStackTrace();
-		  //System.out.println("Failed parse.");
-		  return;
 	  }
 	  //System.out.println("Valid parse.");
   }

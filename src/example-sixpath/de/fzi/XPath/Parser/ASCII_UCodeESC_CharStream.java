@@ -3,7 +3,6 @@ package de.fzi.XPath.Parser;
 
 import java.io.IOException;
 
-import gov.nasa.jpf.jdart.Debug;
 
 /**
  * An implementation of interface CharStream, where the stream is assumed to

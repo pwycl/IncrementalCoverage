@@ -24,7 +24,6 @@
 
 package de.fzi.XPath.Parser;
 
-import gov.nasa.jpf.jdart.Debug;
 
 public class XPathParserTokenManager implements XPathParserConstants
 {
@@ -2008,35 +2007,6 @@ public class XPathParserTokenManager implements XPathParserConstants
             //    return matchedToken;
             if(matchedToken.kind==0) // unsymb EOF
                return matchedToken;
-            if (Debug.isGenTokenStringByConcolic())
-            {
-               Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-               Debug.SystemExit();
-            }
-//           if(SixpathConfig.SYMB_FLAG==false || SixpathConfig.TOKEN_SYMB==false)
-            if (!Debug.isTokenSymb())
-            {
-               System.out.println("getNextToken image: "+matchedToken.image);
-               System.out.println("getNextToken kind: "+XPathParserConstants.tokenImage[matchedToken.kind]);
-               System.out.println("getNextToken "+token_index+" kind: "+matchedToken.kind);
-               System.out.println("-----------buf pos: "+input_stream.tokenBegin);
-               return matchedToken;
-           }
-            int c;
-            if (oldtoken == matchedToken.kind && token_image.equals(matchedToken.image)&& oldpos == input_stream.tokenBegin) {
-               //					if (oldtoken == matchedToken.kind){
-               c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-                       "" + (int) matchedToken.kind , "1");
-            } else {
-               //			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-               c = Debug.makeConcolicInteger("sym_token_" + token_index, ""
-                       + (int) matchedToken.kind , "1");
-               token_index++;
-               oldtoken = matchedToken.kind;
-               token_image=matchedToken.image;
-               oldpos=input_stream.tokenBegin;
-            }
-            matchedToken.kind=c;
             return matchedToken;
          }
 
@@ -2052,37 +2022,7 @@ public class XPathParserTokenManager implements XPathParserConstants
                matchedToken = jjFillToken();
                matchedToken.specialToken = specialToken;
                //       return matchedToken;
-               if(matchedToken.kind==0) // unsymb EOF
-                  return matchedToken;
-               if (Debug.isGenTokenStringByConcolic())
-               {
-                  Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-                  Debug.SystemExit();
-               }
-//           if(SixpathConfig.SYMB_FLAG==false || SixpathConfig.TOKEN_SYMB==false)
-               if (!Debug.isTokenSymb())
-               {
-                  System.out.println("getNextToken image: "+matchedToken.image);
-                  System.out.println("getNextToken kind: "+XPathParserConstants.tokenImage[matchedToken.kind]);
-                  System.out.println("getNextToken "+token_index+" kind: "+matchedToken.kind);
-                  System.out.println("-----------buf pos: "+input_stream.tokenBegin);
-                  return matchedToken;
-               }
-               int c;
-               if (oldtoken == matchedToken.kind && token_image.equals(matchedToken.image)&& oldpos == input_stream.tokenBegin) {
-                  //					if (oldtoken == matchedToken.kind){
-                  c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-                          "" + (int) matchedToken.kind , "1");
-               } else {
-                  //			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-                  c = Debug.makeConcolicInteger("sym_token_" + token_index, ""
-                          + (int) matchedToken.kind , "1");
-                  token_index++;
-                  oldtoken = matchedToken.kind;
-                  token_image=matchedToken.image;
-                  oldpos=input_stream.tokenBegin;
-               }
-               matchedToken.kind=c;
+
                return matchedToken;
             }
             else
