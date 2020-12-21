@@ -72,4 +72,13 @@
     </java>
   </target>
 
+  <target name="coverage-example-expression" depends="instrument">
+    <java classname="test.expression.ExpressionDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+    </java>
+  </target>
+
 </project>
