@@ -24,3 +24,5 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/vcs.xml
 jacoco.exec
+*.saveInput
+*.csv
