@@ -21,7 +21,7 @@ public class JsqlparserDriver extends SubjectExecutor {
     public void execute(String input) {
         try {
             CCJSqlParserUtil.parseStatements(input);
-        } catch (JSQLParserException e) {
+        } catch (Throwable e) {
         }
     }
 }

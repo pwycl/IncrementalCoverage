@@ -43,7 +43,7 @@ public abstract class SubjectExecutor {
         for (String input : inputList){
             try {
                 execute(input);
-            }catch (Exception e){}
+            }catch (Throwable e){}
             i++;
             coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage() + "\n", i, total);
         }

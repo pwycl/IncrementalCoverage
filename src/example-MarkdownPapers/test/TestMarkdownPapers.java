@@ -2,7 +2,6 @@ package test;
 
 
 
-import gov.nasa.jpf.jdart.Debug;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,7 +14,6 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.util.ArrayList;
 
-import gov.nasa.jpf.jdart.SymbolicString;
 import org.tautua.markdownpapers.HtmlEmitter;
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.ast.Document;
@@ -44,7 +42,6 @@ public class TestMarkdownPapers {
 //		}
 //		s = new String(data);
 
-		s = SymbolicString.makeConcolicString(s);
 		System.out.println(s);
 
 		StringReader  in = new StringReader(s);
