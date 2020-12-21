@@ -14,11 +14,11 @@ public class MarkdownPapersDriver extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "org.tautua.markdownpapers";
-        inputFileName = "src/example-MarkdownPapers/TestMDPParser.saveInput";
+        inputFileName = args[0];
         new MarkdownPapersDriver().wrapExecute();
 
-        inputFileName = "src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
-        new MarkdownPapersDriver().wrapExecute();
+//        inputFileName = "src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
+//        new MarkdownPapersDriver().wrapExecute();
     }
 
     @Override

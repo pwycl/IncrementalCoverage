@@ -10,11 +10,11 @@ public class JsqlparserDriver extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "net.sf.jsqlparser";
-        inputFileName = "src/example-jsqlparser/TestJsqlparserParser.saveInput";
+        inputFileName = args[0];
         new JsqlparserDriver().wrapExecute();
 
-        inputFileName = "src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
-        new JsqlparserDriver().wrapExecute();
+//        inputFileName = "src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
+//        new JsqlparserDriver().wrapExecute();
     }
 
     @Override

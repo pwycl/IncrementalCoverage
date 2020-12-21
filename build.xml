@@ -50,7 +50,7 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-
+      <arg value="src/example-fastjson-dev/stage-1.saveInput"/>
     </java>
   </target>
 
@@ -60,6 +60,15 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
+      <arg value="src/example-rhino/TestRhino-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+    </java>
+
+    <java classname="test.rhino.RhinoDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-rhino/TestRhino.saveInput"/>
     </java>
   </target>
 
@@ -69,6 +78,15 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
+      <arg value="src/example-javaparser/TestJavaparserParser.saveInput"/>
+    </java>
+
+    <java classname="test.JavaparserDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-javaparser/TestJavaparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
     </java>
   </target>
 
@@ -78,6 +96,15 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
+      <arg value="src/example-expression/TestExpressionParser.saveInput"/>
+    </java>
+
+    <java classname="test.expression.ExpressionDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-expression/TestExpressionParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
   </target>
 
@@ -87,6 +114,15 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
+      <arg value="src/example-jsqlparser/TestJsqlparserParser.saveInput"/>
+    </java>
+
+    <java classname="test.JsqlparserDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
     </java>
   </target>
 
@@ -96,7 +132,36 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
+      <arg value="src/example-MarkdownPapers/TestMDPParser.saveInput"/>
     </java>
+
+    <java classname="test.MarkdownPapersDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+    </java>
+
+  </target>
+
+  <target name="coverage-example-sixpath" depends="instrument">
+    <java classname="test.sixpath.SixpathDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-sixpath/TestSixpathParser.saveInput"/>
+    </java>
+
+    <java classname="test.sixpath.SixpathDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+    </java>
+
   </target>
 
 </project>
