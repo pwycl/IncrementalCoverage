@@ -4,7 +4,6 @@ package org.nfunk.jep;
 import java.io.IOException;
 import java.util.Vector;
 
-import gov.nasa.jpf.jdart.Debug;
 import org.nfunk.jep.function.*;
 import org.nfunk.jep.type.*;
 

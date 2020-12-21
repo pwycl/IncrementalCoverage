@@ -3,8 +3,6 @@ package org.nfunk.jep;
 
 import java.io.IOException;
 
-import gov.nasa.jpf.jdart.Debug;
-
 /**
  * An implementation of interface CharStream, where the stream is assumed to
  * contain only ASCII characters (with java-like unicode escape processing).

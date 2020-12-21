@@ -4,7 +4,6 @@ import coverage.SubjectExecutor;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
-import mozilla.javascript.tools.shell.Main;
 
 import java.io.IOException;
 import java.io.StringReader;
