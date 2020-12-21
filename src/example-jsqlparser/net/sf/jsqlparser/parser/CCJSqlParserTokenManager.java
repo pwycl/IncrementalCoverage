@@ -23,7 +23,6 @@
 
 package net.sf.jsqlparser.parser;
 
-import gov.nasa.jpf.jdart.Debug;
 
 /** Token Manager. */
 public class CCJSqlParserTokenManager implements CCJSqlParserConstants
@@ -3099,28 +3098,7 @@ public class CCJSqlParserTokenManager implements CCJSqlParserConstants
 					
 					if(matchedToken.kind==0) // unsymb EOF
 						return matchedToken;
-					if (Debug.isGenTokenStringByConcolic())
-					{
-						Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-						Debug.SystemExit();
-					}
-//					if(JsqlparserConfig.SYMB_FLAG==false || JsqlparserConfig.TOKEN_SYMB==false)
-					if (!Debug.isTokenSymb())
-					{
-						return matchedToken;
-					}
-					int c;
-					if (oldtoken == matchedToken.kind ) {
-						c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-								"" + (int) matchedToken.kind , "1");
-					} else {
-						//			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-						c = Debug.makeConcolicInteger("sym_token_" + token_index, ""
-								+ (int) matchedToken.kind , "1");
-						token_index++;
-						oldtoken = matchedToken.kind;
-					}
-					matchedToken.kind=c;
+
 					return matchedToken;
 				}
 
@@ -3141,28 +3119,7 @@ public class CCJSqlParserTokenManager implements CCJSqlParserConstants
 						
 						if(matchedToken.kind==0) // unsymb EOF
 							return matchedToken;
-						if (Debug.isGenTokenStringByConcolic())
-						{
-							Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-							Debug.SystemExit();
-						}
-//						if(JsqlparserConfig.SYMB_FLAG==false || JsqlparserConfig.TOKEN_SYMB==false)
-						if (!Debug.isTokenSymb())
-						{
-							return matchedToken;
-						}
-						int c;
-						if (oldtoken == matchedToken.kind ) {
-							c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-									"" + (int) matchedToken.kind , "1");
-						} else {
-							//			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-							c = Debug.makeConcolicInteger("sym_token_" + token_index, ""
-									+ (int) matchedToken.kind , "1");
-							token_index++;
-							oldtoken = matchedToken.kind;
-						}
-						matchedToken.kind=c;
+
 						return matchedToken;
 					}
 					else

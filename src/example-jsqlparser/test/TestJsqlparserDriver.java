@@ -1,15 +1,11 @@
 package test;
 
-import gov.nasa.jpf.jdart.Debug;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import gov.nasa.jpf.jdart.SymbolicString;
-import gov.nasa.jpf.symbc.Symbolic;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
@@ -55,7 +51,6 @@ public class TestJsqlparserDriver {
 //				s = new String(data);
 //			}
 //		}
-		s = SymbolicString.makeConcolicString(s);
 		System.out.println(s);
 		
 		Statements stmt = CCJSqlParserUtil.parseStatements(s);
