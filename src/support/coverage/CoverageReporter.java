@@ -53,7 +53,7 @@ public class CoverageReporter {
 
     private Map<String, Integer> coveredCount = new HashMap<>();
     private Map<String, Integer> totalCount = new HashMap<>();
-    public Map<String, Integer> getCoverage() throws IOException {
+    public Map<String, Integer> getCoverage(double time) throws IOException {
         ExecutionDataStore execStore = getExecutionDataStore();
         Collection<IClassCoverage> classes = getCoveredClasses(execStore);
         Map<String, Integer> coveredCount = new HashMap<>();
@@ -65,6 +65,8 @@ public class CoverageReporter {
                 totalCount = addTotal2Count(cc,totalCount);
             }
         }
+        coveredCount.put("time", (int)(time * 1000));
+
         this.coveredCount = coveredCount;
         this.totalCount = totalCount;
         writeCSV(writer,this.coveredCount);
@@ -81,7 +83,7 @@ public class CoverageReporter {
     }
 
     public Map<String, Integer> getTotal() throws IOException {
-        this.getCoverage();
+        this.getCoverage(-1);
         return this.totalCount;
     }
 
