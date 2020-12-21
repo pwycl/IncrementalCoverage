@@ -39,18 +39,36 @@
     <jar destfile="test.jar" basedir="${classes.dir}/test"/>
   </target>
 
-  <target name="use" description="Use the Task" depends="jar">
-    <taskdef name="helloworld" classname="HelloWorld" classpath="${ant.project.name}.jar"/>
-    <helloworld/>
-  </target>
+<!--  <target name="use" description="Use the Task" depends="jar">-->
+<!--    <taskdef name="helloworld" classname="HelloWorld" classpath="${ant.project.name}.jar"/>-->
+<!--    <helloworld/>-->
+<!--  </target>-->
 
-  <target name="GetCoverage" depends="instrument">
+  <target name="coverage-example-fastjson-dev" depends="instrument">
     <java classname="test.FastjsonDriver" fork="true">
       <classpath>
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
 
+    </java>
+  </target>
+
+  <target name="coverage-example-rhino" depends="instrument">
+    <java classname="test.rhino.RhinoDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="coverage-example-javaparser" depends="instrument">
+    <java classname="test.JavaparserDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
     </java>
   </target>
 
