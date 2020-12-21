@@ -23,10 +23,11 @@ public abstract class SubjectExecutor {
             }
         }
 
-        CoverageReporter coverageReporter = new CoverageReporter(originalFilePath, packagePrefix);
+        String coverageFile = new File(inputFileName).getPath() + ".csv";
+        CoverageReporter coverageReporter = new CoverageReporter(originalFilePath, packagePrefix, coverageFile);
 
         ignoreExecOutputGenInputListCoverage(inputList, coverageReporter);
-
+        coverageReporter.close();
     }
 
     private void ignoreExecOutputGenInputListCoverage(List<String> inputList, CoverageReporter coverageReporter) throws IOException {

@@ -1,5 +1,6 @@
 package coverage;
 
+import com.opencsv.CSVWriter;
 import org.jacoco.agent.rt.internal_e6e56f0.Agent;
 import org.jacoco.agent.rt.internal_e6e56f0.core.runtime.AgentOptions;
 import org.jacoco.core.analysis.Analyzer;
@@ -11,6 +12,8 @@ import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.SessionInfoStore;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,11 +23,32 @@ public class CoverageReporter {
     private Agent agent = Agent.getInstance(new AgentOptions());
     private String originalFilePath = "classes";
     private String packagePrefix = "";
+    private File targetFile;
+    private CSVWriter writer;
 
-    public CoverageReporter(String originalFilePath, String packagePrefix) {
+    public CoverageReporter(String originalFilePath, String packagePrefix, String coverageFile) {
         this.originalFilePath = originalFilePath;
         this.packagePrefix = packagePrefix;
+        targetFile = new File(coverageFile);
+        try {
+            writer = new CSVWriter(new FileWriter(targetFile));
+        } catch (IOException e) {
+            System.err.println("Error when create CSVWriter for coverage report");
+            e.printStackTrace();
+            System.exit(-1);
+        }
         agent.reset();
+        writer.writeNext(new String[]{"branch","instruction", "line"},false);
+    }
+
+    public void close(){
+        try {
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Coverage writer close error");
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     private Map<String, Integer> coveredCount = new HashMap<>();
@@ -43,7 +67,17 @@ public class CoverageReporter {
         }
         this.coveredCount = coveredCount;
         this.totalCount = totalCount;
+        writeCSV(writer,this.coveredCount);
+
         return this.coveredCount;
+    }
+
+    public void writeCSV(CSVWriter writer, Map<String, Integer> map){
+        int branches = map.get("Branch");
+        int instructions = map.get("Instruction");
+        int lines = map.get("Line");
+        writer.writeNext(new String[]{String.valueOf(branches),String.valueOf(instructions),String.valueOf(lines)},
+                         false);
     }
 
     public Map<String, Integer> getTotal() throws IOException {
@@ -59,11 +93,11 @@ public class CoverageReporter {
         int totalBranches = getBranchTotal(cc);
         addValueInMap(count, totalBranches, "Branch");
 
-        int totalInstruments = getInstrumentTotal(cc);
-        addValueInMap(count, totalInstruments, "Instrument");
+        int totalInstructions = getInstructionTotal(cc);
+        addValueInMap(count, totalInstructions, "Instruction");
 
         int totalLines = getLineTotal(cc);
-        addValueInMap(count, totalLines, "Lines");
+        addValueInMap(count, totalLines, "Line");
 
         return count;
     }
@@ -74,7 +108,7 @@ public class CoverageReporter {
         return total;
     }
 
-    private int getInstrumentTotal(IClassCoverage cc) {
+    private int getInstructionTotal(IClassCoverage cc) {
         ICounter counter = cc.getInstructionCounter();
         int total = counter.getTotalCount();
         return total;
@@ -94,8 +128,8 @@ public class CoverageReporter {
         int coveredBranches = getBranchCoverage(cc);
         addValueInMap(count, coveredBranches, "Branch");
 
-        int coveredInstruments = getInstrumentCoverage(cc);
-        addValueInMap(count, coveredInstruments, "Instrument");
+        int coveredInstructions = getInstructionCoverage(cc);
+        addValueInMap(count, coveredInstructions, "Instruction");
 
         int coveredLines = getLineCoverage(cc);
         addValueInMap(count, coveredLines, "Line");
@@ -120,7 +154,7 @@ public class CoverageReporter {
         return covered;
     }
 
-    private int getInstrumentCoverage(IClassCoverage cc) {
+    private int getInstructionCoverage(IClassCoverage cc) {
         ICounter counter = cc.getInstructionCounter();
         int covered = counter.getCoveredCount();
         return covered;
