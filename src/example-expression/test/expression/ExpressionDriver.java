@@ -11,8 +11,10 @@ public class ExpressionDriver extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "org.nfunk";
-        inputFileName = "src/example-expression/TestExpressionParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
+        inputFileName = "src/example-expression/TestExpressionParser.saveInput";
+        new ExpressionDriver().wrapExecute();
 
+        inputFileName = "src/example-expression/TestExpressionParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput.csv";
         new ExpressionDriver().wrapExecute();
     }
 
