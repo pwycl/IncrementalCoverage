@@ -38,7 +38,7 @@ public class CoverageReporter {
             System.exit(-1);
         }
         agent.reset();
-        writer.writeNext(new String[]{"branch","instruction", "line"},false);
+        writer.writeNext(new String[]{"branch","instruction", "line", "time"},false);
     }
 
     public void close(){
@@ -78,7 +78,8 @@ public class CoverageReporter {
         int branches = map.get("Branch");
         int instructions = map.get("Instruction");
         int lines = map.get("Line");
-        writer.writeNext(new String[]{String.valueOf(branches),String.valueOf(instructions),String.valueOf(lines)},
+        int time = map.get("time");
+        writer.writeNext(new String[]{String.valueOf(branches),String.valueOf(instructions),String.valueOf(lines),String.valueOf(time)},
                          false);
     }
 
