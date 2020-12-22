@@ -13,7 +13,7 @@ public class RhinoDriver extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "mozilla";
-        inputFileName = "src/example-rhino/TestRhino.saveInput";
+        inputFileName = args[0];
 
         new RhinoDriver().wrapExecute();
     }
