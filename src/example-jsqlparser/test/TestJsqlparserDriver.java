@@ -20,8 +20,9 @@ public class TestJsqlparserDriver {
 	}
 	
 	public static void start() throws Exception {
-		String s = "SELECT * FROM Orders WHERE OrderDate='2008-12-26'";
-		
+//		String s = "SELECT * FROM Orders WHERE OrderDate='2008-12-26'";
+		String s = "SELECT * FROM E@ WHERE E@ -> '2008-12-26'";
+
 //		File file=new File("src/example-jsqlparser/test.sql.in");
 //		FileInputStream in=new FileInputStream(file);
 //		int size=in.available();

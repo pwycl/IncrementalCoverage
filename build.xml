@@ -60,7 +60,7 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-rhino/TestRhino-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+      <arg value="src/example-rhino/TestRhino-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
 
     <java classname="test.rhino.RhinoDriver" fork="true">
@@ -122,7 +122,7 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+      <arg value="src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
   </target>
 
@@ -140,7 +140,7 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+      <arg value="src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
 
   </target>
@@ -154,13 +154,13 @@
       <arg value="src/example-sixpath/TestSixpathParser.saveInput"/>
     </java>
 
-    <java classname="test.sixpath.SixpathDriver" fork="true">
-      <classpath>
-        <path refid="lib.path"/>
-        <pathelement path="classes-instr"/>
-      </classpath>
-      <arg value="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
-    </java>
+<!--    <java classname="test.sixpath.SixpathDriver" fork="true">-->
+<!--      <classpath>-->
+<!--        <path refid="lib.path"/>-->
+<!--        <pathelement path="classes-instr"/>-->
+<!--      </classpath>-->
+<!--      <arg value="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>-->
+<!--    </java>-->
 
   </target>
 

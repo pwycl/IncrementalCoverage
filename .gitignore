@@ -27,3 +27,5 @@ jacoco.exec
 *.saveInput
 *.csv
 out/*
+classes/
+classes-instr

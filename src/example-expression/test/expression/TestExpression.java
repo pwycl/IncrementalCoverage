@@ -27,8 +27,8 @@ public class TestExpression {
     }
 
     public static void driver() throws Exception{
-//        String s="4 + 4 + \"a\"";
-        String s="1 + 1";
+        String s="V40 [ V40 [ V40 [ V40 [ V40 [ V40 [ V40 / V40 ( V40 V40 [ V40 [ V40 [ V40 [ V40 [ V40 [ V40 / V40 ( V40 ) )";
+//        String s="1 + 1";
 //        char[] in = {0, 0, 0, 0, 0, 49, 43, 124, 124, };
 //        String s=String.valueOf(in);
 
