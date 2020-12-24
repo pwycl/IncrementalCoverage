@@ -84,7 +84,7 @@ public class CoverageReporter {
     }
 
     public Map<String, Integer> getTotal() throws IOException {
-        this.getCoverage(-1);
+//        this.getCoverage(-1);
         return this.totalCount;
     }
 
