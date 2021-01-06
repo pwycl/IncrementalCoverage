@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:jacoco="antlib:org.jacoco.ant" name="MyTask" basedir="." default="use">
+<project xmlns:jacoco="antlib:org.jacoco.ant" name="MyTask" basedir="." default="compile">
 
   <property name="src.dir" value="src"/>
   <property name="classes.dir" value="classes"/>
@@ -50,25 +50,41 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-fastjson-dev/stage-1.saveInput"/>
+      <arg value="src/example-fastjson-dev/TestFastJSONDevParser.saveInput"/>
+    </java>
+
+    <java classname="test.FastjsonDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-fastjson-dev/TestFastJSONDevParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
   </target>
 
   <target name="coverage-example-rhino" depends="instrument">
-    <java classname="test.rhino.RhinoDriver" fork="true">
-      <classpath>
-        <path refid="lib.path"/>
-        <pathelement path="classes-instr"/>
-      </classpath>
-      <arg value="src/example-rhino/TestRhino-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
-    </java>
+<!--    <java classname="test.rhino.RhinoDriver" fork="true">-->
+<!--      <classpath>-->
+<!--        <path refid="lib.path"/>-->
+<!--        <pathelement path="classes-instr"/>-->
+<!--      </classpath>-->
+<!--      <arg value="src/example-rhino/TestRhino-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>-->
+<!--    </java>-->
+
+<!--    <java classname="test.rhino.RhinoDriver" fork="true">-->
+<!--      <classpath>-->
+<!--        <path refid="lib.path"/>-->
+<!--        <pathelement path="classes-instr"/>-->
+<!--      </classpath>-->
+<!--      <arg value="src/example-rhino/TestRhino.saveInput"/>-->
+<!--    </java>-->
 
     <java classname="test.rhino.RhinoDriver" fork="true">
       <classpath>
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-rhino/TestRhino.saveInput"/>
+      <arg value="src/example-rhino/.saveInput"/>
     </java>
   </target>
 
@@ -86,7 +102,7 @@
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-javaparser/TestJavaparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput"/>
+      <arg value="src/example-javaparser/TestJavaparserParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
     </java>
   </target>
 
@@ -154,14 +170,32 @@
       <arg value="src/example-sixpath/TestSixpathParser.saveInput"/>
     </java>
 
-<!--    <java classname="test.sixpath.SixpathDriver" fork="true">-->
-<!--      <classpath>-->
-<!--        <path refid="lib.path"/>-->
-<!--        <pathelement path="classes-instr"/>-->
-<!--      </classpath>-->
-<!--      <arg value="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>-->
-<!--    </java>-->
+    <java classname="test.sixpath.SixpathDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
+    </java>
 
+  </target>
+
+  <target name="coverage-example-mXparser" depends="instrument">
+    <java classname="test.mxparser.mXparserDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-mXparser/TestmXparserParser.saveInput"/>
+    </java>
+
+    <java classname="test.mxparser.mXparserDriver" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="src/example-mXparser/TestmXparserParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
+    </java>
   </target>
 
 </project>
