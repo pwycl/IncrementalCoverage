@@ -1644,7 +1644,7 @@ public final class Context {
         return null;
     }
 
-    private static boolean requireSecurityDomain = true;
+    private static boolean requireSecurityDomain = false;
     static {
 //        final String securityResourceName = 
 //            "org.mozilla.javascript.resources.Security";
