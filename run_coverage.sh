@@ -7,3 +7,5 @@ export JDK_HOME=/usr/local/jdk1.8
 #ant coverage-example-jsqlparser
 #ant coverage-example-MarkdownPapers
 #ant coverage-example-sixpath
+#ant coverage-example-fastjson-dev
+ant coverage-example-mXparser
