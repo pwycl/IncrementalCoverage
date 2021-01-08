@@ -7717,6 +7717,7 @@ public class Expression extends PrimitiveElement {
 		/*
 		 * Check all available positions in the expression tokens list
 		 */
+		int cnt = 0;
 		do {
 			/*
 			 * 1st step
@@ -8039,7 +8040,9 @@ public class Expression extends PrimitiveElement {
 		/*
 		 * while there is still something to analyse
 		 */
+			cnt ++ ;
 		} while (pos < newExpressionString.length());
+		System.out.println("while iter: " + cnt  +"!!!!!!!");
 		/*
 		 * If key word was not known by the parser
 		 * and end with the string end

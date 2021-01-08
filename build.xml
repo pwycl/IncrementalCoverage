@@ -181,21 +181,30 @@
   </target>
 
   <target name="coverage-example-mXparser" depends="instrument">
-    <java classname="test.mxparser.mXparserDriver" fork="true">
-      <classpath>
-        <path refid="lib.path"/>
-        <pathelement path="classes-instr"/>
-      </classpath>
-      <arg value="src/example-mXparser/TestmXparserParser.saveInput"/>
-    </java>
+<!--    <java classname="test.mxparser.mXparserDriver" fork="true">-->
+<!--      <classpath>-->
+<!--        <path refid="lib.path"/>-->
+<!--        <pathelement path="classes-instr"/>-->
+<!--      </classpath>-->
+<!--      <arg value="src/example-mXparser/TestmXparserParser.saveInput"/>-->
+<!--    </java>-->
+
+<!--    <java classname="test.mxparser.mXparserDriver" fork="true">-->
+<!--      <classpath>-->
+<!--        <path refid="lib.path"/>-->
+<!--        <pathelement path="classes-instr"/>-->
+<!--      </classpath>-->
+<!--      <arg value="src/example-mXparser/TestmXparserParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>-->
+<!--    </java>-->
 
     <java classname="test.mxparser.mXparserDriver" fork="true">
       <classpath>
         <path refid="lib.path"/>
         <pathelement path="classes-instr"/>
       </classpath>
-      <arg value="src/example-mXparser/TestmXparserParser-TokenSymb-genTokenString-TokenLengthBound5.saveInput"/>
+      <arg value="src/example-mXparser/TestmXparserParser-TokenSymb-genTokenString-TokenLengthBound5-stage3.saveInput"/>
     </java>
+
   </target>
 
 </project>

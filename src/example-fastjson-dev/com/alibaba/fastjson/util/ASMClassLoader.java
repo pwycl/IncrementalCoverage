@@ -147,12 +147,12 @@ public class ASMClassLoader extends ClassLoader {
     static ClassLoader getParentClassLoader() {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         if (contextClassLoader != null) {
-            try {
-                contextClassLoader.loadClass(JSON.class.getName());
+//            try {
+//                contextClassLoader.loadClass(JSON.class.getName());
                 return contextClassLoader;
-            } catch (ClassNotFoundException e) {
-                // skip
-            }
+//            } catch (ClassNotFoundException e) {
+//                // skip
+//            }
         }
         return JSON.class.getClassLoader();
     }

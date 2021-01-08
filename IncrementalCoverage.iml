@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/example-jsqlparser" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/example-MarkdownPapers" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/example-sixpath" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/example-mXparser" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />

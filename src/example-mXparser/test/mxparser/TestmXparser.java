@@ -4,6 +4,8 @@ import org.mariuszgromada.math.mxparser.Expression;
 
 public class TestmXparser {
     public static void main(String[] args) throws Exception{
+        String s = "11";
+        s = s+"";
         start();
     }
 
@@ -14,7 +16,7 @@ public class TestmXparser {
 //        Debug.prepareForStage3();
 //        Debug.printCurrentPC();
 //        try {
-//            stage3();
+            stage3();
 //        }catch (Throwable e){}
 //        Debug.printCurrentPC();
 //        Debug.finishStage3();

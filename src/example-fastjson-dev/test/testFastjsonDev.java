@@ -14,7 +14,7 @@ public class testFastjsonDev {
 
 //	static String json = "{ \"age\" : 22 , \"flag\" : [ true , false ] }";
 
-	static String json = "{,,[}";
+	static String json = "{ \"age\" : 22 ,\"flag\" : [ true , false ] }";
 
 	public static void main(String[] args) throws Exception {
 //		char[] data = {34, 92, 120, 115, };  // java.lang.ArrayIndexOutOfBoundsException: 115
@@ -37,7 +37,7 @@ public class testFastjsonDev {
 //		}
 
 //		System.out.println(json);
-//		start();
+		start();
 
 	}
 	public void s(){};
