@@ -10,7 +10,8 @@ public class FastjsonDriver extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "com.alibaba.fastjson";
 
-        inputFileName = "src/example-fastjson-dev/stage-1.saveInput";
+//        inputFileName = "src/example-fastjson-dev/stage-1.saveInput";
+        inputFileName = args[0];
 
         new FastjsonDriver().wrapExecute();
     }

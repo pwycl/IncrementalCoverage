@@ -1,3 +1,4 @@
+GenCoverage
 clean
 compile
 coverage-example-MarkdownPapers
@@ -5,6 +6,7 @@ coverage-example-expression
 coverage-example-fastjson-dev
 coverage-example-javaparser
 coverage-example-jsqlparser
+coverage-example-mXparser
 coverage-example-rhino
 coverage-example-sixpath
 instrument

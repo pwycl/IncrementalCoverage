@@ -33,7 +33,7 @@ public class TestParser {
 	}
 
 //	static String src = "[1,2]";
-	static String src = " 3 / ( 1 + 2 )";
+	static String src = ".57";
 
 	public void stage1_2(){
 		System.out.println(src);

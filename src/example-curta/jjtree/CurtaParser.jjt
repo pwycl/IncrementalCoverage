@@ -1,0 +1,263 @@
+options {
+  STATIC=false;
+  NODE_DEFAULT_VOID=true;
+  NODE_CLASS="CurtaNode";
+}
+
+PARSER_BEGIN(CurtaParser)
+
+package nl.bigo.curta;
+
+public class CurtaParser {
+}
+
+PARSER_END(CurtaParser)
+
+/**
+ * Lexer rules
+ */
+TOKEN :
+{
+     < EOS        : ";" | "\r\n" | "\n" | "\r" >
+  |  < OParen     : "(" >
+  |  < CParen     : ")" >
+  |  < Assign     : "=" >
+  |  < Or         : "||" >
+  |  < And        : "&&" >
+  |  < BOr        : "|" >
+  |  < BXOr       : "^" >
+  |  < BAnd       : "&" >
+  |  < Add        : "+" >
+  |  < Sub        : "-" >
+  |  < Pow        : "**" >
+  |  < Mul        : "*" >
+  |  < Div        : "/" >
+  |  < Mod        : "%" >
+  |  < GTE        : ">=" >
+  |  < GT         : ">" >
+  |  < LTE        : "<=" >
+  |  < LT         : "<" >
+  |  < SLShift    : "<<" >
+  |  < URShift    : ">>>" >
+  |  < SRShift    : ">>" >
+  |  < Eq         : "==" >
+  |  < NEq        : "!=" >
+  |  < Not        : "!" >
+  |  < BNot       : "~" >
+  |  < Comma      : "," >
+  |  < True       : "true" >
+  |  < False      : "false" >
+  |  < Null       : "null" >
+  |  < Return     : "return" >
+  |  < NumDouble  : (<Digit>)+ "." (<Digit>)+ | "." (<Digit>)+ >
+  |  < NumLong    : (<Digit>)+ >
+  |  < Identifier : ("_" | <Letter>) ("_" | <AlphaNum>)* >
+}
+
+TOKEN :
+{
+     < #Digit    : ["0"-"9"] >
+  |  < #Letter   : ["a"-"z","A"-"Z"] >
+  |  < #AlphaNum : <Letter> | <Digit> >
+}
+
+SKIP :
+{
+     " " 
+  |  "\t"
+}
+
+/**
+ * Parser rules javacc options
+ */
+public CurtaNode ast() #Root :
+{}
+{
+  (<EOS>)* statements() <EOF> {return jjtThis;}
+}
+
+private void statements() :
+{}
+{
+  (LOOKAHEAD(2) assignment() (<EOS>)+)* ret()
+}
+
+private void ret() #Return :
+{}
+{
+  (<Return>)? expr() (<EOS>)*
+}
+
+private void assignment() #Assign :
+{}
+{
+  id() <Assign> expr()
+}
+
+private void expr() :
+{}
+{
+  or()
+}
+
+private void or() :
+{}
+{
+  and() ( <Or> and() #Or(2)
+        )*
+}
+
+private void and() :
+{}
+{
+  bor() ( <And> bor() #And(2)
+        )*
+}
+
+private void bor() :
+{}
+{
+  bxor() ( <BOr> bxor() #BOr(2)
+         )*
+}
+
+private void bxor() :
+{}
+{
+  band() ( <BXOr> band() #BXOr(2)
+         )*
+}
+
+private void band() :
+{}
+{
+  equality() ( <BAnd> equality() #BAnd(2)
+             )*
+}
+
+private void equality() :
+{}
+{
+  relational() ( <Eq>  relational() #Eq(2)
+               | <NEq> relational() #NEq(2)
+               )*
+}
+
+private void relational() :
+{}
+{
+  shift() ( <GTE> shift() #GTE(2)
+          | <LTE> shift() #LTE(2)
+          | <GT>  shift() #GT(2)
+          | <LT>  shift() #LT(2)
+          )*
+}
+
+
+
+
+private void shift() :
+{}
+{
+  add() ( <SLShift> add() #SLShift(2)
+        | <URShift> add() #URShift(2)
+        | <SRShift> add() #SRShift(2)
+        )*
+}
+
+private void add() :
+{}
+{
+  mul() ( <Add> mul() #Add(2)
+        | <Sub> mul() #Sub(2)
+        )*
+}
+
+private void mul() :
+{}
+{
+  unary() ( <Mul> unary() #Mul(2)
+          | <Div> unary() #Div(2)
+          | <Mod> unary() #Mod(2)
+          )*
+}
+
+private void unary() :
+{}
+{
+     <Sub> unary() #UnarySub
+  |  <Add> unary() #UnaryAdd
+  |  <Not> unary() #Not
+  |  bitwiseUnary()
+}
+
+private void bitwiseUnary() :
+{}
+{
+     <BNot> unary() #BNot
+  |  pow()
+}
+
+private void pow() :
+{}
+{
+  atom() ( LOOKAHEAD(2) <Pow> unary() #Pow(2)
+         )*
+}
+
+private void atom() :
+{}
+{
+     LOOKAHEAD(2)
+     function()
+  |  id()
+  |  num()
+  |  _null()
+  |  bool()
+  |  <OParen> expr() <CParen>
+}
+
+private void function() #Function :
+{}
+{
+    id() params()
+}
+
+private void num() #Num :
+{
+  Token t;
+}
+{
+     t=<NumDouble> {jjtThis.value = Double.valueOf(t.image);}
+  |  t=<NumLong>   {jjtThis.value = Long.valueOf(t.image);}
+}
+
+private void _null() #Null :
+{}
+{
+  <Null> {jjtThis.value = null;}
+}
+
+private void id() #Id :
+{
+  Token t;
+}
+{
+  t=<Identifier> {jjtThis.value = t.image;}
+}
+
+private void bool() #Bool :
+{
+  Token t;
+}
+{
+     <True>  {jjtThis.value = Boolean.TRUE;}
+  |  <False> {jjtThis.value = Boolean.FALSE;}
+}
+
+private void params() :
+{}
+{
+  <OParen> (expr() (<Comma> expr())*)? <CParen>
+}
+

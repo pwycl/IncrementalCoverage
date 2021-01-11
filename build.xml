@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:jacoco="antlib:org.jacoco.ant" name="MyTask" basedir="." default="compile">
+<project xmlns:jacoco="antlib:org.jacoco.ant" name="MyTask" basedir="." default="instrument">
 
   <property name="src.dir" value="src"/>
   <property name="classes.dir" value="classes"/>
@@ -205,6 +205,16 @@
       <arg value="src/example-mXparser/TestmXparserParser-TokenSymb-genTokenString-TokenLengthBound5-stage3.saveInput"/>
     </java>
 
+  </target>
+
+  <target name="GenCoverage">
+    <java classname="${classToRun}" fork="true">
+      <classpath>
+        <path refid="lib.path"/>
+        <pathelement path="classes-instr"/>
+      </classpath>
+      <arg value="${SaveInputFile}"/>
+    </java>
   </target>
 
 </project>
