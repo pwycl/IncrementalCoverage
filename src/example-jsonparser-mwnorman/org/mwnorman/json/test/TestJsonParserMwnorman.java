@@ -65,7 +65,7 @@ public class TestJsonParserMwnorman extends Object {
 	  StringReader reader = new StringReader(s);
 	  JSONParser parser = new JSONParser(reader);
 	  try {
-		Map parsedJSON = parser.object();
+		parser.parse();
 	} catch (org.mwnorman.json.ParseException e) {
 		// TODO Auto-generated catch block
 //		e.printStackTrace();

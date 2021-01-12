@@ -22,7 +22,6 @@
  ******************************************************************************/
 package org.mwnorman.json;
 //javase imports
-import gov.nasa.jpf.jdart.Debug;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -1166,14 +1165,6 @@ int jjmatchedPos;
 int jjmatchedKind;
 
 /** Get the next Token. */
-public static int token_index = 0;
-public static Token oldtoken=null;
-public static boolean isSameToken(Token t1, Token t2){
-//		System.out.println(t2.beginLine+" "+t2.beginColumn+" "+t2.endLine+" "+t2.endColumn);
-   if(t1==null)
-      return false;
-   return (t1.kind==t2.kind && t1.image.equals(t2.image)&& t1.beginLine==t2.beginLine && t1.beginColumn==t2.beginColumn && t1.endLine==t2.endLine && t1.endColumn==t2.endColumn);
-}
 public Token getNextToken() 
 {
   Token matchedToken;
@@ -1190,39 +1181,6 @@ public Token getNextToken()
    {
       jjmatchedKind = 0;
       matchedToken = jjFillToken();
-
-      if(matchedToken.kind==0) // unsymb EOF
-      {
-         if (Debug.isGenTokenStringByConcolic())
-         {
-            Debug.SystemExit();
-         }
-         return matchedToken;
-      }
-      Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-      if (Debug.isGenTokenStringByConcolic())
-      {
-         Debug.SystemExit();
-      }
-      if (Debug.isTokenSymb())
-         Debug.cleanPC();
-
-      if(!Debug.isTokenSymb()){
-         return matchedToken;
-      }
-      int c;
-      if (isSameToken(oldtoken, matchedToken)) {
-         //					if (oldtoken == matchedToken.kind){
-         c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-                 "" + (int) matchedToken.kind , "1");
-      } else {
-         //			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-         c = Debug.makeConcolicInteger("sym_token_" + token_index,
-                 "" + (int) matchedToken.kind , "1");
-         token_index++;
-         oldtoken=matchedToken;
-      }
-      matchedToken.kind=c;
 
       return matchedToken;
    }
@@ -1272,39 +1230,6 @@ public Token getNextToken()
            matchedToken = jjFillToken();
        if (jjnewLexState[jjmatchedKind] != -1)
          curLexState = jjnewLexState[jjmatchedKind];
-
-           if(matchedToken.kind==0) // unsymb EOF
-           {
-              if (Debug.isGenTokenStringByConcolic())
-              {
-                 Debug.SystemExit();
-              }
-              return matchedToken;
-           }
-           Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-           if (Debug.isGenTokenStringByConcolic())
-           {
-              Debug.SystemExit();
-           }
-           if (Debug.isTokenSymb())
-              Debug.cleanPC();
-
-           if(!Debug.isTokenSymb()){
-              return matchedToken;
-           }
-           int c;
-           if (isSameToken(oldtoken, matchedToken)) {
-              //					if (oldtoken == matchedToken.kind){
-              c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-                      "" + (int) matchedToken.kind , "1");
-           } else {
-              //			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-              c = Debug.makeConcolicInteger("sym_token_" + token_index,
-                      "" + (int) matchedToken.kind , "1");
-              token_index++;
-              oldtoken=matchedToken;
-           }
-           matchedToken.kind=c;
 
            return matchedToken;
         }
