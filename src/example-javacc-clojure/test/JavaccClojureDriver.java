@@ -1,0 +1,32 @@
+package test;
+
+import clojure.ClojureParser;
+import clojure.ParseException;
+import coverage.SubjectExecutor;
+
+import java.io.IOException;
+import java.io.StringReader;
+
+public class JavaccClojureDriver extends SubjectExecutor {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        packagePrefix = "clojure";
+        inputFileName = args[0];
+        new JavaccClojureDriver().wrapExecute();
+    }
+
+    @Override
+    public void execute(String input) throws Throwable {
+        try {
+            stage1_2(input);
+        }catch (Throwable e){}
+    }
+
+    private void stage1_2(String s) {
+        StringReader reader = new StringReader(s);
+
+        try {
+            new ClojureParser(reader).S();
+        } catch (ParseException e) {
+        }
+    }
+}
