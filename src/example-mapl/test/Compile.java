@@ -1,13 +1,13 @@
 
-import parser.TokenMgrError;
-import parser.ParseException;
-import parser.MaplParser;
-import cloptions.CLOptions;
-import syntaxtree.*;
-import staticanalysis.*;
-import pretty.PrettyPrinter;
-import visitor.Visitor;
-import compiler.Compiler;
+import mapl.parser.TokenMgrError;
+import mapl.parser.ParseException;
+import mapl.parser.MaplParser;
+import mapl.cloptions.CLOptions;
+import mapl.syntaxtree.*;
+import mapl.staticanalysis.*;
+import mapl.pretty.PrettyPrinter;
+import mapl.visitor.Visitor;
+import mapl.compiler.Compiler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A harness to run the compiler.
+ * A harness to run the mapl.compiler.
  */
 public class Compile {
 
@@ -32,7 +32,7 @@ public class Compile {
      * <p>
      * Options: <ul>
      * <li> -notype (disable type checking)
-     * <li> -source (pretty-print parsed input)
+     * <li> -source (mapl.pretty-print parsed input)
      * <li> -quiet (suppress progress messages)
      * <li> -nousedef (disable check for uninitialised local variables)
      * </ul>
@@ -92,7 +92,7 @@ public class Compile {
             {
                 report("Allocating variables...");
                 System.out.flush();
-                Visitor<Void> varAllocator = new staticanalysis.VarAllocator(symTab);
+                Visitor<Void> varAllocator = new mapl.staticanalysis.VarAllocator(symTab);
                 root.accept(varAllocator);
                 reportln("...done.");
             }

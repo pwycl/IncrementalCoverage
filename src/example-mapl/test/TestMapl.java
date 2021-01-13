@@ -21,12 +21,12 @@ package test;
  * Contributor(s): none.
  *========================================================================*/
 
-import parser.MaplParser;
-import parser.ParseException;
-import staticanalysis.SymbolTable;
-import staticanalysis.SymbolTableBuilder;
-import staticanalysis.TypeChecker;
-import syntaxtree.Program;
+import mapl.parser.MaplParser;
+import mapl.parser.ParseException;
+import mapl.staticanalysis.SymbolTable;
+import mapl.staticanalysis.SymbolTableBuilder;
+import mapl.staticanalysis.TypeChecker;
+import mapl.syntaxtree.Program;
 
 import java.io.*;
 
@@ -65,7 +65,7 @@ public class TestMapl extends Object {
 	public void stage1_2_old(){
 	  
 	  StringBuffer buffer = new StringBuffer();
-	  String file = "src/example-mapl/examples/xor.mapl";
+	  String file = "src/example-mapl/mapl.examples/xor.mapl";
 	  FileReader freader = null;
 	  try {
 		freader = new FileReader(file);
@@ -89,7 +89,7 @@ public class TestMapl extends Object {
 //        System.out.println("parsing...");
         try {
 			parser.nt_Program();
-		} catch (parser.ParseException e) {
+		} catch (mapl.parser.ParseException e) {
 //			e.printStackTrace();
 		}
 //        System.out.println("...parse completed.");

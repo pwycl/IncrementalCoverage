@@ -1,9 +1,9 @@
-import parser.MaplParser;
-import pretty.PrettyPrinter;
+import mapl.parser.MaplParser;
+import mapl.pretty.PrettyPrinter;
 
 /**
  * A harness to test that the abstract syntax tree is being built correctly.
- * The main method pretty-prints the AST to standard out.
+ * The main method mapl.pretty-prints the AST to standard out.
  */
 public class Pretty {
 

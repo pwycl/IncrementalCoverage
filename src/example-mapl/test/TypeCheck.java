@@ -1,12 +1,12 @@
 
-import parser.TokenMgrError;
-import parser.ParseException;
-import parser.MaplParser;
-import staticanalysis.TypeChecker;
-import staticanalysis.SymbolTable;
-import staticanalysis.SymbolTableBuilder;
-import syntaxtree.*;
-import staticanalysis.StaticAnalysisException;
+import mapl.parser.TokenMgrError;
+import mapl.parser.ParseException;
+import mapl.parser.MaplParser;
+import mapl.staticanalysis.TypeChecker;
+import mapl.staticanalysis.SymbolTable;
+import mapl.staticanalysis.SymbolTableBuilder;
+import mapl.syntaxtree.*;
+import mapl.staticanalysis.StaticAnalysisException;
 
 /**
  * A harness to run the type checker.
