@@ -43,16 +43,20 @@ public abstract class SubjectExecutor {
         int i = 0;
         int total = inputWithTime.size();
 //        for (String input : inputWithTime)
+        double time = 0;
         for (Map.Entry<String, Double> entry : inputWithTime.entrySet())
         {
             String input = entry.getKey();
-            double time = entry.getValue();
+            time = entry.getValue();
             try {
                 execute(input);
             }catch (Throwable e){}
             i++;
-            coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
+            if (i%100 == 0){
+                coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
+            }
         }
+        coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
         coverageStream.println(coverageReporter.getTotal());
     }
 
