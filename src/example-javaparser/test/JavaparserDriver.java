@@ -12,7 +12,6 @@ public class JavaparserDriver extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "japa.parser";
-//        inputFileName = "src/example-javaparser/TestJavaparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
         inputFileName = args[0];
         new JavaparserDriver().wrapExecute();
 

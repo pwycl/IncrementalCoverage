@@ -21,20 +21,13 @@ package test;
  * Contributor(s): none.
  *========================================================================*/
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.io.*;
-import java.util.LinkedList;
-
 import com.viaoa.javaparser.JavaParser;
 import com.viaoa.javaparser.JavaParserTreeConstants;
 import com.viaoa.javaparser.ParseException;
-
 import com.viaoa.javaparser.SimpleNode;
-import gov.nasa.jpf.jdart.Debug;
-import gov.nasa.jpf.jdart.SymbolicString;
-import gov.nasa.jpf.symbc.Symbolic;
+
+import java.io.StringReader;
+import java.util.LinkedList;
 
 public class TestOajavaParser extends Object {
 

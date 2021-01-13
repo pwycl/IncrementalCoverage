@@ -2098,50 +2098,9 @@ public class JavaParserTokenManager implements JavaParserConstants {
 	int jjmatchedKind;
 	Token tokenLast;
 
-	public static int token_index = 0;
-	public static Token oldtoken=null;
-	public static boolean isSameToken(Token t1, Token t2){
-//		System.out.println(t2.beginLine+" "+t2.beginColumn+" "+t2.endLine+" "+t2.endColumn);
-		if(t1==null)
-			return false;
-		return (t1.kind==t2.kind && t1.image.equals(t2.image)&& t1.beginLine==t2.beginLine && t1.beginColumn==t2.beginColumn && t1.endLine==t2.endLine && t1.endColumn==t2.endColumn);
-	}
 	public Token getNextToken() {
 		Token matchedToken = _getNextToken();
 		tokenLast = matchedToken;
-
-		if(matchedToken.kind==0) // unsymb EOF
-		{
-			if (Debug.isGenTokenStringByConcolic())
-			{
-				Debug.SystemExit();
-			}
-			return matchedToken;
-		}
-		Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-		if (Debug.isGenTokenStringByConcolic())
-		{
-			Debug.SystemExit();
-		}
-		if (Debug.isTokenSymb())
-			Debug.cleanPC();
-
-		if(!Debug.isTokenSymb()){
-			return matchedToken;
-		}
-		int c;
-		if (isSameToken(oldtoken, matchedToken)) {
-			//					if (oldtoken == matchedToken.kind){
-			c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-					"" + (int) matchedToken.kind , "1");
-		} else {
-			//			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-			c = Debug.makeConcolicInteger("sym_token_" + token_index,
-					"" + (int) matchedToken.kind , "1");
-			token_index++;
-			oldtoken=matchedToken;
-		}
-		matchedToken.kind=c;
 
 		return matchedToken;
 	}
@@ -2159,39 +2118,6 @@ public class JavaParserTokenManager implements JavaParserConstants {
 				jjmatchedKind = 0;
 				matchedToken = jjFillToken();
 				matchedToken.specialToken = specialToken;
-
-				if(matchedToken.kind==0) // unsymb EOF
-				{
-					if (Debug.isGenTokenStringByConcolic())
-					{
-						Debug.SystemExit();
-					}
-					return matchedToken;
-				}
-				Debug.GenTokenStringByConcolic(""+matchedToken.kind,matchedToken.image);
-				if (Debug.isGenTokenStringByConcolic())
-				{
-					Debug.SystemExit();
-				}
-				if (Debug.isTokenSymb())
-					Debug.cleanPC();
-
-				if(!Debug.isTokenSymb()){
-					return matchedToken;
-				}
-				int c;
-				if (isSameToken(oldtoken, matchedToken)) {
-					//					if (oldtoken == matchedToken.kind){
-					c = Debug.makeConcolicInteger("sym_token_" + (token_index - 1),
-							"" + (int) matchedToken.kind , "1");
-				} else {
-					//			System.out.println("start to create: " + pos + ":" + token + ":" +token_index);
-					c = Debug.makeConcolicInteger("sym_token_" + token_index,
-							"" + (int) matchedToken.kind , "1");
-					token_index++;
-					oldtoken=matchedToken;
-				}
-				matchedToken.kind=c;
 
 				return matchedToken;
 			}
