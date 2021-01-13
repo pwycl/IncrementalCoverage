@@ -23,24 +23,24 @@ package sql;
 
 public class TestSqlParser extends Object {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws Exception {
 		new TestSqlParser().start();
 	}
 
-	public void start() throws ParseException {
+	public void start() throws Exception {
 		stage1_2();
 
 //		Debug.setValidInputTrue();
 	}
 
-	public void stage1_2() throws ParseException {
+	public void stage1_2() throws Exception {
 		String s="select e.Name, d.MName \n from Emp e, Dept d \n where d.Name = c.MName and (((c.Salary > 7000 and d.Name = \"James\" and c.Name = d.Name)))";
 //		s = SymbolicString.makeConcolicString(s);
 //		System.out.println(s);
 		String rst = parse(s);
 	}
 
-	private String parse(String input) throws ParseException {
+	private String parse(String input) throws Exception {
 		String rst = "";
 		rst = Parser.parse(input);
 

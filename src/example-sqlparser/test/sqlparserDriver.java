@@ -21,13 +21,13 @@ public class sqlparserDriver extends SubjectExecutor {
         }catch (Throwable e){}
     }
 
-    void stage1_2(String s) throws ParseException {
+    void stage1_2(String s) throws Exception {
         //		s = SymbolicString.makeConcolicString(s);
 //		System.out.println(s);
         String rst = parse(s);
     }
 
-    private String parse(String input) throws ParseException {
+    private String parse(String input) throws Exception {
         String rst = "";
         rst = Parser.parse(input);
 
