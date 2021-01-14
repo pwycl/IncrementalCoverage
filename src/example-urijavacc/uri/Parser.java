@@ -55,8 +55,8 @@ public class Parser implements ParserConstants {
       }
       jj_consume_token(0);
     } catch (ParseException e) {
-        System.out.println("Failed to parse translationUnit");
-        e.printStackTrace();
+//        System.out.println("Failed to parse translationUnit");
+//        e.printStackTrace();
     }
       {if (true) return new Program(functions);}
     throw new Error("Missing return statement in function");
