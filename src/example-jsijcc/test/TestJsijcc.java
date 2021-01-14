@@ -33,19 +33,19 @@ public class TestJsijcc extends Object {
 
 	private SimpleNode sn;
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParseException {
 	  new TestJsijcc().start();
 	}
 
-	public void start() {
+	public void start() throws ParseException {
   		stage1_2();
 //		Debug.setValidInputTrue();
 //		Debug.prepareForStage3();
 		stage3();
 	}
 
-	private void stage1_2() {
-		String s = "var a = 5 for(var i = 0; i < 10;) {} false && true ";
+	private void stage1_2() throws ParseException {
+		String s = "i < 10"; //"var a = 5 for(var i = 0; i < 10;) {} false && true ";
 //		String s = "5 % 3";
 //		s = SymbolicString.makeConcolicString(s);
 		System.out.println(s);
@@ -53,12 +53,7 @@ public class TestJsijcc extends Object {
 
 		Javascript parser = new Javascript(reader);
 //		SimpleNode sn = null;
-		try {
-			sn = Javascript.program();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sn = Javascript.program();
 	}
 
 	void stage3(){

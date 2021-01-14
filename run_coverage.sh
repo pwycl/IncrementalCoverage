@@ -21,7 +21,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-javaparser/TestJavaparserParser-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.FastjsonDriver"
 #saveInputFile="src/example-fastjson-dev/TestFastJSONDevParser-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -31,7 +31,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-fastjson-dev/TestFastJSONDevParser-TokenSymb-genTokenString-TokenLengthBound5-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.sixpath.SixpathDriver"
 #saveInputFile="src/example-sixpath/TestSixpathParser-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -41,7 +41,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.awkparser.awkDriver"
 #saveInputFile="src/example-awkparser/TestAwkParserDriver-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -51,7 +51,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-awkparser/TestAwkParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.CurtaDriver"
 #saveInputFile="src/example-curta/TestCurtaParser-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -91,15 +91,15 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-htmlgramparser/TestHtmlGramParser-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.FastjsonDriver"
 #saveInputFile="src/example-fastjson-dev/grammar-fuzzer.saveinput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.MarkdownPapersDriver"
 #saveInputFile="src/example-MarkdownPapers/grammar-fuzzer.saveinput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.J2LatexDriver"
 #saveInputFile="src/example-j2latex/TestJ2LatexDriver-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -109,7 +109,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-j2latex/TestJ2LatexDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.JavaccClojureDriver"
 #saveInputFile="src/example-javacc-clojure/TestJavaccClojureDriver-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -120,15 +120,15 @@ ant instrument
 #saveInputFile="src/example-javacc-clojure/TestJavaccClojureDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #
-#className="test.javaccgrammarDriver"
-#saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-bfs.saveInput"
-#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-#saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-dfs.saveInput"
-#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-#saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-bfs.saveInput"
-#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-#saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
-#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+className="test.javaccgrammarDriver"
+saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-bfs.saveInput"
+ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-dfs.saveInput"
+ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-bfs.saveInput"
+ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+saveInputFile="src/example-javaccgrammar/TestJavaccGrammarDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
+ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #
 #className="org.mwnorman.json.test.jsonParserMwnormanDriver"
 #saveInputFile="src/example-jsonparser-mwnorman/TestJsonParserMwnormanDriver-bfs.saveInput"
@@ -139,7 +139,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-jsonparser-mwnorman/TestJsonParserMwnormanDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.mapl.maplDriver"
 #saveInputFile="src/example-mapl/TestMaplDriver-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -149,7 +149,7 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-mapl/TestMaplDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
+#
 #className="test.oajavaparserDriver"
 #saveInputFile="src/example-oajavaparser/TestOaJavaParserDriver-bfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
@@ -159,16 +159,16 @@ ant instrument
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 #saveInputFile="src/example-oajavaparser/TestOaJavaParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
 #ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-
-className="test.sqlparserDriver"
-saveInputFile="src/example-sqlparser/TestSqlParserDriver-bfs.saveInput"
-ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-saveInputFile="src/example-sqlparser/TestSqlParserDriver-dfs.saveInput"
-ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-saveInputFile="src/example-sqlparser/TestSqlParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-bfs.saveInput"
-ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
-saveInputFile="src/example-sqlparser/TestSqlParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
-ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+#
+#className="test.sqlparserDriver"
+#saveInputFile="src/example-sqlparser/TestSqlParserDriver-bfs.saveInput"
+#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+#saveInputFile="src/example-sqlparser/TestSqlParserDriver-dfs.saveInput"
+#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+#saveInputFile="src/example-sqlparser/TestSqlParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-bfs.saveInput"
+#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
+#saveInputFile="src/example-sqlparser/TestSqlParserDriver-TokenSymb-genTokenString-TokenLengthBound3-stage3-dfs.saveInput"
+#ant GenCoverage -DclassToRun=${className}  -DSaveInputFile=${saveInputFile}
 
 #className="test.urijavaccDriver"
 #saveInputFile="src/example-urijavacc/TestUriJavaccDriver-bfs.saveInput"
