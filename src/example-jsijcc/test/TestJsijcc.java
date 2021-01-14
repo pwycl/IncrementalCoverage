@@ -53,7 +53,7 @@ public class TestJsijcc extends Object {
 
 		Javascript parser = new Javascript(reader);
 //		SimpleNode sn = null;
-		sn = Javascript.program();
+		sn = parser.program();
 	}
 
 	void stage3(){
