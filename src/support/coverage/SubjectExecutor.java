@@ -52,7 +52,7 @@ public abstract class SubjectExecutor {
                 execute(input);
             }catch (Throwable e){}
             i++;
-            if (i%100 == 0){
+            if (i%1000 == 0){
                 coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
             }
         }
