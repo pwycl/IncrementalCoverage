@@ -1,5 +1,5 @@
 /*
- * Copyright 1999-2017 Alibaba Group.
+ * Copyright 1999-2101 Alibaba Group.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,21 @@
  */
 package com.alibaba.fastjson.util;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 /**
  * for concurrent IdentityHashMap
  * 
- * @author wenshao[szujobs@hotmail.com]
+ * @author wenshao<szujobs@hotmail.com>
  */
 @SuppressWarnings("unchecked")
 public class IdentityHashMap<K, V> {
+
+    public static final int     DEFAULT_TABLE_SIZE = 1024;
+
     private final Entry<K, V>[] buckets;
     private final int           indexMask;
-    public final static int DEFAULT_SIZE = 8192;
 
     public IdentityHashMap(){
-        this(DEFAULT_SIZE);
+        this(DEFAULT_TABLE_SIZE);
     }
 
     public IdentityHashMap(int tableSize){
@@ -51,29 +50,6 @@ public class IdentityHashMap<K, V> {
         return null;
     }
 
-    public Class findClass(String keyString) {
-        for (int i = 0; i < buckets.length; i++) {
-            Entry bucket = buckets[i];
-
-            if (bucket == null) {
-                continue;
-            }
-
-            for (Entry<K, V> entry = bucket; entry != null; entry = entry.next) {
-                Object key = bucket.key;
-                if (key instanceof Class) {
-                    Class clazz = ((Class) key);
-                    String className = clazz.getName();
-                    if (className.equals(keyString)) {
-                        return clazz;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
     public boolean put(K key, V value) {
         final int hash = System.identityHashCode(key);
         final int bucket = hash & indexMask;
@@ -86,9 +62,19 @@ public class IdentityHashMap<K, V> {
         }
 
         Entry<K, V> entry = new Entry<K, V>(key, value, hash, buckets[bucket]);
-        buckets[bucket] = entry;  // 并发是处理时会可能导致缓存丢失，但不影响正确性
+        buckets[bucket] = entry;  // 
 
         return false;
+    }
+
+    public int size() {
+        int size = 0;
+        for (int i = 0; i < buckets.length; ++i) {
+            for (Entry<K, V> entry = buckets[i]; entry != null; entry = entry.next) {
+                size++;
+            }
+        }
+        return size;
     }
 
     protected static final class Entry<K, V> {
@@ -107,7 +93,4 @@ public class IdentityHashMap<K, V> {
         }
     }
 
-    public void clear() {
-        Arrays.fill(this.buckets, null);
-    }
 }

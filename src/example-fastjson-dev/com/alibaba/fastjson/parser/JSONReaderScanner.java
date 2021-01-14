@@ -1,5 +1,5 @@
 /*
- * Copyright 1999-2017 Alibaba Group.
+ * Copyright 1999-2101 Alibaba Group.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,26 @@ import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.math.BigDecimal;
+import java.lang.ref.SoftReference;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.util.Base64;
 import com.alibaba.fastjson.util.IOUtils;
 
-//这个类，为了性能优化做了很多特别处理，一切都是为了性能！！！
+//
 
 /**
- * @author wenshao[szujobs@hotmail.com]
+ * @author wenshao<szujobs@hotmail.com>
  */
-public final class JSONReaderScanner extends JSONLexerBase {
+public final class JSONReaderScanner extends JSONLexer {
 
-    private final static ThreadLocal<char[]> BUF_LOCAL = new ThreadLocal<char[]>();
+    public final static int                                 BUF_INIT_LEN  = 8192;
+    private final static ThreadLocal<SoftReference<char[]>> BUF_REF_LOCAL = new ThreadLocal<SoftReference<char[]>>();
 
-    private Reader                           reader;
-    private char[]                           buf;
-    private int                              bufLength;
+    private Reader                                          reader;
+    private char[]                                          buf;
+    private int                                             bufLength;
 
     public JSONReaderScanner(String input){
         this(input, JSON.DEFAULT_PARSER_FEATURE);
@@ -55,16 +57,17 @@ public final class JSONReaderScanner extends JSONLexerBase {
     }
 
     public JSONReaderScanner(Reader reader, int features){
-        super(features);
         this.reader = reader;
+        this.features = features;
 
-        buf = BUF_LOCAL.get();
-        if (buf != null) {
-            BUF_LOCAL.set(null);
+        SoftReference<char[]> bufRef = BUF_REF_LOCAL.get();
+        if (bufRef != null) {
+            this.buf = bufRef.get();
+            BUF_REF_LOCAL.set(null);
         }
 
-        if (buf == null) {
-            buf = new char[1024 * 16];
+        if (this.buf == null) {
+            this.buf = new char[BUF_INIT_LEN];
         }
 
         try {
@@ -76,7 +79,7 @@ public final class JSONReaderScanner extends JSONLexerBase {
         bp = -1;
 
         next();
-        if (ch == 65279) { // utf8 bom
+        if (ch == 65279) {
             next();
         }
     }
@@ -94,57 +97,41 @@ public final class JSONReaderScanner extends JSONLexerBase {
                 return EOI;
             }
 
-            if (bp == 0) {
-                char[] buf = new char[(this.buf.length * 3) / 2];
-                System.arraycopy(this.buf, bp, buf, 0, bufLength);
-
-                int rest = buf.length - bufLength;
-                try {
-                    int len = reader.read(buf, bufLength, rest);
-                    bufLength += len;
-                    this.buf = buf;
-                } catch (IOException e) {
-                    throw new JSONException(e.getMessage(), e);
-                }
-            } else {
-                int rest = bufLength - bp;
-                if (rest > 0) {
-                    System.arraycopy(buf, bp, buf, 0, rest);
-                }
-
-                try {
-                    bufLength = reader.read(buf, rest, buf.length - rest);
-                } catch (IOException e) {
-                    throw new JSONException(e.getMessage(), e);
-                }
-
-                if (bufLength == 0) {
-                    throw new JSONException("illegal state, textLength is zero");
-                }
-
-                if (bufLength == -1) {
-                    return EOI;
-                }
-
-                bufLength += rest;
-                index -= bp;
-                np -= bp;
-                bp = 0;
+            int rest = bufLength - bp;
+            if (rest > 0) {
+                System.arraycopy(buf, bp, buf, 0, rest);
             }
+
+            try {
+                bufLength = reader.read(buf, rest, buf.length - rest);
+            } catch (IOException e) {
+                throw new JSONException(e.getMessage(), e);
+            }
+
+            if (bufLength == 0) {
+                throw new JSONException("illegal stat, textLength is zero");
+            }
+
+            if (bufLength == -1) {
+                return EOI;
+            }
+
+            bufLength += rest;
+            index -= bp;
+            np -= bp;
+            bp = 0;
         }
 
         return buf[index];
     }
 
     public final int indexOf(char ch, int startIndex) {
-        int offset = startIndex - bp;
+        int offset = startIndex;
         for (;; ++offset) {
-            final int index = bp + offset;
-            char chLoal = charAt(index);
-            if (ch == chLoal) {
-                return offset + bp;
+            if (ch == charAt(offset)) {
+                return offset;
             }
-            if (chLoal == EOI) {
+            if (ch == EOI) {
                 return -1;
             }
         }
@@ -163,26 +150,19 @@ public final class JSONReaderScanner extends JSONLexerBase {
             }
 
             if (sp > 0) {
-                int offset;
-                offset = bufLength - sp;
-                if (ch == '"' && offset > 0) {
-                    offset--;
+                if (this.token == JSONToken.LITERAL_STRING) {
+                    System.arraycopy(buf, buf.length - sp, buf, 0, sp);
+                    np = -1 + sp;
+                } else {
+                    System.arraycopy(buf, bufLength - sp, buf, 0, sp);
+                    np = 0;
                 }
-                System.arraycopy(buf, offset, buf, 0, sp);
             }
-            np = -1;
-
             index = bp = sp;
 
             try {
                 int startPos = bp;
                 int readLength = buf.length - startPos;
-                if (readLength == 0) {
-                    char[] newBuf = new char[buf.length * 2];
-                    System.arraycopy(buf, 0, newBuf, 0, buf.length);
-                    buf = newBuf;
-                    readLength = buf.length - startPos;
-                }
                 bufLength = reader.read(buf, bp, readLength);
             } catch (IOException e) {
                 throw new JSONException(e.getMessage(), e);
@@ -217,11 +197,7 @@ public final class JSONReaderScanner extends JSONLexerBase {
     }
 
     public byte[] bytesValue() {
-        if (token == JSONToken.HEX) {
-            throw new JSONException("TODO");
-        }
-
-        return IOUtils.decodeBase64(buf, np + 1, sp);
+        return Base64.decodeFast(buf, np + 1, sp);
     }
 
     protected final void arrayCopy(int srcPos, char[] dest, int destPos, int length) {
@@ -233,14 +209,7 @@ public final class JSONReaderScanner extends JSONLexerBase {
      */
     public final String stringVal() {
         if (!hasSpecial) {
-            int offset = np + 1;
-            if (offset < 0) {
-                throw new IllegalStateException();
-            }
-            if (offset > buf.length - sp) {
-                throw new IllegalStateException();
-            }
-            return new String(buf, offset, sp);
+            return new String(buf, np + 1, sp);
             // return text.substring(np + 1, np + 1 + sp);
         } else {
             return new String(sbuf, 0, sp);
@@ -248,63 +217,25 @@ public final class JSONReaderScanner extends JSONLexerBase {
     }
 
     public final String subString(int offset, int count) {
-        if (count < 0) {
-            throw new StringIndexOutOfBoundsException(count);
-        }
         return new String(buf, offset, count);
         // return text.substring(offset, offset + count);
     }
 
-    public final char[] sub_chars(int offset, int count) {
-        if (count < 0) {
-            throw new StringIndexOutOfBoundsException(count);
-        }
-        
-        if (offset == 0) {
-            return buf;
-        }
-        char[] chars = new char[count];
-        System.arraycopy(buf, offset, chars, 0, count);
-        return chars;
-    }
-
     public final String numberString() {
-        int offset = np;
-        if (offset == -1) {
-            offset = 0;
-        }
-        char chLocal = charAt(offset + sp - 1);
+        char chLocal = charAt(np + sp - 1);
 
         int sp = this.sp;
         if (chLocal == 'L' || chLocal == 'S' || chLocal == 'B' || chLocal == 'F' || chLocal == 'D') {
             sp--;
         }
 
-        String value = new String(buf, offset, sp);
-        return value;
-    }
-
-    public final BigDecimal decimalValue() {
-        int offset = np;
-        if (offset == -1) {
-            offset = 0;
-        }
-        char chLocal = charAt(offset + sp - 1);
-
-        int sp = this.sp;
-        if (chLocal == 'L' || chLocal == 'S' || chLocal == 'B' || chLocal == 'F' || chLocal == 'D') {
-            sp--;
-        }
-
-        return new BigDecimal(buf, offset, sp);
+        return new String(buf, np, sp);
     }
 
     public void close() {
         super.close();
 
-        if (buf.length <= 1024 * 64) {
-            BUF_LOCAL.set(buf);
-        }
+        BUF_REF_LOCAL.set(new SoftReference<char[]>(buf));
         this.buf = null;
 
         IOUtils.close(reader);
@@ -313,21 +244,5 @@ public final class JSONReaderScanner extends JSONLexerBase {
     @Override
     public boolean isEOF() {
         return bufLength == -1 || bp == buf.length || ch == EOI && bp + 1 == buf.length;
-    }
-
-    public final boolean isBlankInput() {
-        for (int i = 0;; ++i) {
-            char chLocal = buf[i];
-            if (chLocal == EOI) {
-                token = JSONToken.EOF;
-                break;
-            }
-
-            if (!isWhitespace(chLocal)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

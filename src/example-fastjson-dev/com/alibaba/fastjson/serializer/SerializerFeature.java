@@ -1,5 +1,5 @@
 /*
- * Copyright 1999-2018 Alibaba Group.
+ * Copyright 1999-2101 Alibaba Group.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package com.alibaba.fastjson.serializer;
 
+
 /**
- * @author wenshao[szujobs@hotmail.com]
+ * @author wenshao<szujobs@hotmail.com>
  */
 public enum SerializerFeature {
     QuoteFieldNames,
@@ -29,13 +30,9 @@ public enum SerializerFeature {
      */
     WriteMapNullValue,
     /**
-     * 用枚举toString()值输出
+     * 
      */
     WriteEnumUsingToString,
-    /**
-     * 用枚举name()输出
-     */
-    WriteEnumUsingName,
     /**
      * 
      */
@@ -81,130 +78,60 @@ public enum SerializerFeature {
     /**
      * @since 1.1.6
      */
-    DisableCircularReferenceDetect, // 32768
+    DisableCircularReferenceDetect,
 
     /**
      * @since 1.1.9
      */
     WriteSlashAsSpecial,
-
+    
     /**
      * @since 1.1.10
      */
     BrowserCompatible,
-
+    
     /**
      * @since 1.1.14
      */
     WriteDateUseDateFormat,
-
+    
     /**
      * @since 1.1.15
      */
     NotWriteRootClassName,
-
+    
     /**
      * @since 1.1.19
-     * @deprecated
      */
     DisableCheckSpecialChar,
-
-    /**
-     * @since 1.1.35
-     */
-    BeanToArray,
-
-    /**
-     * @since 1.1.37
-     */
-    WriteNonStringKeyAsString,
     
     /**
-     * @since 1.1.42
+     * @since 1.1.34
      */
-    NotWriteDefaultValue,
-    
-    /**
-     * @since 1.2.6
-     */
-    BrowserSecure,
-    
-    /**
-     * @since 1.2.7
-     */
-    IgnoreNonFieldGetter,
-    
-    /**
-     * @since 1.2.9
-     */
-    WriteNonStringValueAsString,
-    
-    /**
-     * @since 1.2.11
-     */
-    IgnoreErrorGetter,
+    WriteObjectAsArray
+    ;
 
-    /**
-     * @since 1.2.16
-     */
-    WriteBigDecimalAsPlain,
-
-    /**
-     * @since 1.2.27
-     */
-    MapSortField;
-
-    SerializerFeature(){
+    private SerializerFeature(){
         mask = (1 << ordinal());
     }
 
-    public final int mask;
+    private final int mask;
 
     public final int getMask() {
         return mask;
     }
 
     public static boolean isEnabled(int features, SerializerFeature feature) {
-        return (features & feature.mask) != 0;
-    }
-    
-    public static boolean isEnabled(int features, int fieaturesB, SerializerFeature feature) {
-        int mask = feature.mask;
-        
-        return (features & mask) != 0 || (fieaturesB & mask) != 0;
+        return (features & feature.getMask()) != 0;
     }
 
     public static int config(int features, SerializerFeature feature, boolean state) {
         if (state) {
-            features |= feature.mask;
+            features |= feature.getMask();
         } else {
-            features &= ~feature.mask;
+            features &= ~feature.getMask();
         }
 
         return features;
     }
-    
-    public static int of(SerializerFeature[] features) {
-        if (features == null) {
-            return 0;
-        }
-        
-        int value = 0;
-        
-        for (SerializerFeature feature: features) {
-            value |= feature.mask;
-        }
-        
-        return value;
-    }
-    
-    public final static SerializerFeature[] EMPTY = new SerializerFeature[0];
-
-    public static final int WRITE_MAP_NULL_FEATURES
-            = WriteMapNullValue.getMask()
-            | WriteNullBooleanAsFalse.getMask()
-            | WriteNullListAsEmpty.getMask()
-            | WriteNullNumberAsZero.getMask()
-            | WriteNullStringAsEmpty.getMask()
-            ;
 }

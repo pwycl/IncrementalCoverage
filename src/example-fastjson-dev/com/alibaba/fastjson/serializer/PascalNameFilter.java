@@ -7,10 +7,11 @@ public class PascalNameFilter implements NameFilter {
             return name;
         }
         
-        char[] chars = name.toCharArray();
-        chars[0]= Character.toUpperCase(chars[0]);
+        char firstChar = name.charAt(0);
+        char upperFirstChar = Character.toUpperCase(firstChar);
         
-        String pascalName = new String(chars);
+        String pascalName = upperFirstChar + name.substring(1);
         return pascalName;
     }
+
 }

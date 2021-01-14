@@ -9,15 +9,14 @@ import static com.alibaba.fastjson.JSONStreamContext.StartObject;
 import java.io.Closeable;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.JSONLexer;
 import com.alibaba.fastjson.parser.JSONReaderScanner;
 import com.alibaba.fastjson.parser.JSONToken;
+import com.alibaba.fastjson.util.IOUtils;
 import com.alibaba.fastjson.util.TypeUtils;
 
 public class JSONReader implements Closeable {
@@ -26,14 +25,7 @@ public class JSONReader implements Closeable {
     private JSONStreamContext       context;
 
     public JSONReader(Reader reader){
-        this(reader, new Feature[0]);
-    }
-    
-    public JSONReader(Reader reader, Feature... features){
         this(new JSONReaderScanner(reader));
-        for (Feature feature : features) {
-            this.config(feature, true);
-        }
     }
 
     public JSONReader(JSONLexer lexer){
@@ -43,25 +35,9 @@ public class JSONReader implements Closeable {
     public JSONReader(DefaultJSONParser parser){
         this.parser = parser;
     }
-    
-    public void setTimzeZone(TimeZone timezone) {
-        this.parser.lexer.setTimeZone(timezone);
-    }
-    
-    public void setLocale(Locale locale) {
-        this.parser.lexer.setLocale(locale);
-    }
 
     public void config(Feature feature, boolean state) {
         this.parser.config(feature, state);
-    }
-    
-    public Locale getLocal() {
-        return this.parser.lexer.getLocale();
-    }
-    
-    public TimeZone getTimzeZone() {
-        return this.parser.lexer.getTimeZone();
     }
 
     public void startObject() {
@@ -97,7 +73,7 @@ public class JSONReader implements Closeable {
     }
 
     private void startStructure() {
-        final int state = context.state;
+        final int state = context.getState();
         switch (state) {
             case PropertyKey:
                 parser.accept(JSONToken.COLON);
@@ -110,18 +86,18 @@ public class JSONReader implements Closeable {
             case StartObject:
                 break;
             default:
-                throw new JSONException("illegal state : " + context.state);
+                throw new JSONException("illegal state : " + context.getState());
         }
     }
 
     private void endStructure() {
-        context = context.parent;
+        context = context.getParent();
 
         if (context == null) {
             return;
         }
         
-        final int state = context.state;
+        final int state = context.getState();
         int newState = -1;
         switch (state) {
             case PropertyKey:
@@ -138,7 +114,7 @@ public class JSONReader implements Closeable {
                 break;
         }
         if (newState != -1) {
-            context.state = newState;
+            context.setState(newState);
         }
     }
 
@@ -147,8 +123,8 @@ public class JSONReader implements Closeable {
             throw new JSONException("context is null");
         }
 
-        final int token = parser.lexer.token();
-        final int state = context.state;
+        final int token = parser.getLexer().token();
+        final int state = context.getState();
         switch (state) {
             case StartArray:
             case ArrayValue:
@@ -161,12 +137,8 @@ public class JSONReader implements Closeable {
         }
     }
 
-    public int peek() {
-        return parser.lexer.token();
-    }
-
     public void close() {
-        parser.close();
+        IOUtils.close(parser);
     }
 
     public Integer readInteger() {
@@ -201,21 +173,11 @@ public class JSONReader implements Closeable {
             object = parser.parse();
         } else {
             readBefore();
-            JSONLexer lexer = parser.lexer;
-            if (context.state == JSONStreamContext.StartObject && lexer.token() == JSONToken.IDENTIFIER) {
-                object = lexer.stringVal();
-                lexer.nextToken();
-            } else {
-                object = parser.parse();
-            }
+            object = parser.parse();
             readAfter();
         }
 
         return TypeUtils.castToString(object);
-    }
-    
-    public <T> T readObject(TypeReference<T> typeRef) {
-        return readObject(typeRef.getType());
     }
 
     public <T> T readObject(Type type) {
@@ -258,7 +220,7 @@ public class JSONReader implements Closeable {
 
         readBefore();
         Object object;
-        switch (context.state) {
+        switch (context.getState()) {
             case StartObject:
             case PropertyValue:
                 object = parser.parseKey();
@@ -285,7 +247,7 @@ public class JSONReader implements Closeable {
     }
 
     private void readBefore() {
-        int state = context.state;
+        int state = context.getState();
         // before
         switch (state) {
             case PropertyKey:
@@ -307,7 +269,7 @@ public class JSONReader implements Closeable {
     }
 
     private void readAfter() {
-        int state = context.state;
+        int state = context.getState();
         int newStat = -1;
         switch (state) {
             case StartObject:
@@ -328,7 +290,7 @@ public class JSONReader implements Closeable {
                 throw new JSONException("illegal state : " + state);
         }
         if (newStat != -1) {
-            context.state = newStat;
+            context.setState(newStat);
         }
     }
 
