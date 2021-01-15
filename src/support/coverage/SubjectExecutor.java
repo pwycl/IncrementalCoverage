@@ -11,6 +11,7 @@ public abstract class SubjectExecutor {
     protected static String originalFilePath = "classes";
     protected static Map<String, Double> inputWithTime = new HashMap<>();
     protected static String inputFileName = "";
+    protected static boolean isBrief = false;
 
     public void wrapExecute() throws IOException, ClassNotFoundException {
         assert (!originalFilePath.isEmpty());
@@ -44,6 +45,7 @@ public abstract class SubjectExecutor {
         int total = inputWithTime.size();
 //        for (String input : inputWithTime)
         double time = 0;
+        Map<String, Integer> cov = new HashMap<>();
         for (Map.Entry<String, Double> entry : inputWithTime.entrySet())
         {
             String input = entry.getKey();
@@ -52,11 +54,18 @@ public abstract class SubjectExecutor {
                 execute(input);
             }catch (Throwable e){}
             i++;
-            if (i%1000 == 0){
-                coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
+            if (isBrief){
+                ;
+            }else{
+                if (i%10 == 0){
+                    cov = coverageReporter.getCoverage(time);
+                    coverageStream.printf("%d of %d inputs, " + cov + "\n", i, total);
+                }
             }
+
         }
-        coverageStream.printf("%d of %d inputs, " + coverageReporter.getCoverage(time) + "\n", i, total);
+        cov = coverageReporter.getCoverage(time);
+        coverageStream.printf("%d of %d inputs, " + cov + "\n", i, total);
         coverageStream.println(coverageReporter.getTotal());
     }
 
