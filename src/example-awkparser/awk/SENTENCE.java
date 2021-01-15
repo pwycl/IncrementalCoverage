@@ -183,8 +183,7 @@ public class SENTENCE implements SENTENCEConstants {
             }
             case 0:{
                 jj_consume_token(0);
-                System.exit(0);
-                break;
+                return;
             }
             default:
                 jj_la1[0] = jj_gen;
