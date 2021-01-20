@@ -1,9 +1,7 @@
 package coverage;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class SubjectExecutor {
@@ -26,7 +24,8 @@ public abstract class SubjectExecutor {
             }
         }
 
-        String coverageFile = new File(inputFileName).getPath() + ".csv";
+//        String coverageFile = new File(inputFileName).getPath() + ".csv";
+        String coverageFile = inputFileName.split("\\.")[0] + ".csv";
         CoverageReporter coverageReporter = new CoverageReporter(originalFilePath, packagePrefix, coverageFile);
 
         ignoreExecOutputGenInputListCoverage(inputWithTime, coverageReporter);
@@ -36,8 +35,10 @@ public abstract class SubjectExecutor {
     private void ignoreExecOutputGenInputListCoverage(Map<String, Double> inputWithTime, CoverageReporter coverageReporter) throws IOException {
         PrintStream coverageStream = System.out;
         System.setOut(new PrintStream(new NullOutputStream()));
+        System.setErr(new PrintStream(new NullOutputStream()));
         genInputListCoverage(inputWithTime, coverageReporter, coverageStream);
         System.setOut(coverageStream);
+        System.setErr(coverageStream);
     }
 
     private void genInputListCoverage(Map<String, Double> inputWithTime, CoverageReporter coverageReporter, PrintStream coverageStream) throws IOException {
@@ -57,14 +58,14 @@ public abstract class SubjectExecutor {
             if (isBrief){
                 ;
             }else{
-                if (i%10 == 0){
-                    cov = coverageReporter.getCoverage(time);
+                if(i % 6 == 0){
+                    cov = coverageReporter.getCoverage(time, i);
                     coverageStream.printf("%d of %d inputs, " + cov + "\n", i, total);
                 }
             }
 
         }
-        cov = coverageReporter.getCoverage(time);
+        cov = coverageReporter.getCoverage(time, i);
         coverageStream.printf("%d of %d inputs, " + cov + "\n", i, total);
         coverageStream.println(coverageReporter.getTotal());
     }

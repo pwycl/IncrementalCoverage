@@ -10,6 +10,7 @@ import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.SessionInfoStore;
+import org.nfunk.jep.function.Str;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -38,7 +39,7 @@ public class CoverageReporter {
             System.exit(-1);
         }
         agent.reset();
-        writer.writeNext(new String[]{"branch","instruction", "line", "time"},false);
+        writer.writeNext(new String[]{"branch","instruction", "line", "path", "time"},false);
     }
 
     public void close(){
@@ -53,7 +54,7 @@ public class CoverageReporter {
 
     private Map<String, Integer> coveredCount = new HashMap<>();
     private Map<String, Integer> totalCount = new HashMap<>();
-    public Map<String, Integer> getCoverage(double time) throws IOException {
+    public Map<String, Integer> getCoverage(double time, int pathNumber) throws IOException {
         ExecutionDataStore execStore = getExecutionDataStore();
         Collection<IClassCoverage> classes = getCoveredClasses(execStore);
         Map<String, Integer> coveredCount = new HashMap<>();
@@ -65,7 +66,8 @@ public class CoverageReporter {
                 totalCount = addTotal2Count(cc,totalCount);
             }
         }
-        coveredCount.put("time", (int)(time * 1000));
+        coveredCount.put("path", pathNumber);
+        coveredCount.put("time", (int)time);
 
         this.coveredCount = coveredCount;
         this.totalCount = totalCount;
@@ -78,8 +80,9 @@ public class CoverageReporter {
         int branches = map.get("Branch");
         int instructions = map.get("Instruction");
         int lines = map.get("Line");
+        int paths = map.get("path");
         int time = map.get("time");
-        writer.writeNext(new String[]{String.valueOf(branches),String.valueOf(instructions),String.valueOf(lines),String.valueOf(time)},
+        writer.writeNext(new String[]{String.valueOf(branches),String.valueOf(instructions),String.valueOf(lines), String.valueOf(paths),String.valueOf(time)},
                          false);
     }
 
