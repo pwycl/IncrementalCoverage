@@ -39,10 +39,12 @@ public class TestHtmlGram extends Object {
 	}
 
   public void stage1_2() throws ParseException{
-	  String s="<!doctype html> <!doctype html>"
-				+ "<html><head><title>First parse</title></head>"
-				+ "<!-- Region: {view-rendered} 	 Module: {view-rendered}  -->"
-				  + "<body><p>Parsed HTML into a doc.</p></body></html>";
+//	  String s="<!doctype html> <!doctype html>"
+//				+ "<html><head><title>First parse</title></head>"
+//				+ "<!-- Region: {view-rendered} 	 Module: {view-rendered}  -->"
+//				  + "<body><p>Parsed HTML into a doc.</p></body></html>";
+	  String s = "a ";
+
 //	  s = SymbolicString.makeConcolicString(s);
 	  System.out.println(s);
 

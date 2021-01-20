@@ -1,22 +1,19 @@
-package test.sixpath;
-
 import coverage.SubjectExecutor;
 import de.fzi.XPath.Parser.ParseException;
 import de.fzi.XPath.Parser.XPathParser;
-import test.MarkdownPapersDriver;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class SixpathDriver extends SubjectExecutor {
+public class TestSixpathParser extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "de.fzi.XPath";
         inputFileName = args[0];
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new SixpathDriver().wrapExecute();
+        new TestSixpathParser().wrapExecute();
 
 //        inputFileName = "src/example-sixpath/TestSixpathParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
 //        new SixpathDriver().wrapExecute();

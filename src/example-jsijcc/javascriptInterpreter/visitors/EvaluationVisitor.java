@@ -466,13 +466,8 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
         return firstOperand.jjtAccept(this, data);
     }
 
-    static int cnt = 0;
-    static int cnt_bound = 1000 * 50;
+
     public JavascriptType visit(ASTlogicalAndExpression node, Context data){
-        cnt ++;
-        if (cnt > cnt_bound){
-            System.exit(-1);
-        }
         ASTbitwiseOrExpression firstOperand = (ASTbitwiseOrExpression)node.jjtGetChild(0);
         if(node.jjtGetNumChildren() > 1){
             ASTlogicalAndExpression secondOperand = (ASTlogicalAndExpression)node.jjtGetChild(1);

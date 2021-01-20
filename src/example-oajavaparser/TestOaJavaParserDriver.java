@@ -1,5 +1,3 @@
-package test;
-
 import com.viaoa.javaparser.JavaParser;
 import com.viaoa.javaparser.JavaParserTreeConstants;
 import com.viaoa.javaparser.ParseException;
@@ -10,14 +8,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.LinkedList;
 
-public class oajavaparserDriver extends SubjectExecutor {
+public class TestOaJavaParserDriver extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "com.viaoa.javaparser";
         inputFileName = args[0];
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new oajavaparserDriver().wrapExecute();
+        new TestOaJavaParserDriver().wrapExecute();
     }
 
     @Override

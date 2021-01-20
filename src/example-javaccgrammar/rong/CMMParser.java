@@ -180,7 +180,8 @@ tmp.setValue(v.value);
     tk = jj_consume_token(IDENTIFIERS);
 Symbol tmp = table.getSymbol(tk.image);
          Scanner sc = new Scanner(System.in);
-         tmp.setValue(sc.nextLine());
+//         tmp.setValue(sc.nextLine());
+      tmp.setValue("System.in");
     jj_consume_token(RPS);
     jj_consume_token(SEMI);
   }

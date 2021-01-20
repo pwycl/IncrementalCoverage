@@ -1,5 +1,3 @@
-package test;
-
 import coverage.SubjectExecutor;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
@@ -8,7 +6,7 @@ import japa.parser.ast.CompilationUnit;
 import java.io.IOException;
 import java.io.StringReader;
 
-public class JavaparserDriver extends SubjectExecutor {
+public class TestJavaparserParser extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "japa.parser";
@@ -16,7 +14,7 @@ public class JavaparserDriver extends SubjectExecutor {
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new JavaparserDriver().wrapExecute();
+        new TestJavaparserParser().wrapExecute();
 
 //        inputFileName = "src/example-javaparser/TestJavaparserParser.saveInput";
 //        new JavaparserDriver().wrapExecute();

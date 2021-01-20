@@ -1,5 +1,3 @@
-package test.mapl;
-
 import coverage.SubjectExecutor;
 import mapl.parser.MaplParser;
 import mapl.parser.ParseException;
@@ -11,7 +9,7 @@ import mapl.syntaxtree.Program;
 import java.io.IOException;
 import java.io.StringReader;
 
-public class maplDriver extends SubjectExecutor {
+public class TestMaplDriver extends SubjectExecutor {
 
     private Program root;
 
@@ -21,7 +19,7 @@ public class maplDriver extends SubjectExecutor {
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new maplDriver().wrapExecute();
+        new TestMaplDriver().wrapExecute();
     }
 
     @Override

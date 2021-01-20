@@ -1,39 +1,36 @@
-package test;
-
 import coverage.SubjectExecutor;
-import sql.ParseException;
-import sql.Parser;
+import nl.bigo.curta.Curta;
+import nl.bigo.curta.ParseException;
 
 import java.io.IOException;
 
-public class sqlparserDriver extends SubjectExecutor {
+public class TestCurtaParser extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        packagePrefix = "sql";
+        packagePrefix = "nl.bigo.curta";
         inputFileName = args[0];
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new sqlparserDriver().wrapExecute();
+        new TestCurtaParser().wrapExecute();
     }
-
 
     @Override
     public void execute(String input) throws Throwable {
         try {
             stage1_2(input);
+            stage3();
         }catch (Throwable e){}
     }
 
-    void stage1_2(String s) throws Exception {
+    Curta curta = new Curta();
+
+    public void stage1_2(String s) throws ParseException {
         //		s = SymbolicString.makeConcolicString(s);
-//		System.out.println(s);
-        String rst = parse(s);
+        curta = new Curta();
+        curta.stage1_2(s);
     }
 
-    private String parse(String input) throws Exception {
-        String rst = "";
-        rst = Parser.parse(input);
-
-        return rst;
+    void stage3() {
+        curta.stage3();
     }
 }

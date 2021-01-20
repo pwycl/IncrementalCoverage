@@ -1,5 +1,3 @@
-package test.rhino;
-
 import coverage.SubjectExecutor;
 import mozilla.javascript.IRFactory;
 import mozilla.javascript.Parser;
@@ -9,7 +7,7 @@ import mozilla.javascript.TokenStream;
 import java.io.IOException;
 import java.io.StringReader;
 
-public class RhinoDriver extends SubjectExecutor {
+public class TestRhino extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "mozilla";
@@ -18,7 +16,7 @@ public class RhinoDriver extends SubjectExecutor {
             isBrief = args[1].equals("1") ? true : false;
         }
 
-        new RhinoDriver().wrapExecute();
+        new TestRhino().wrapExecute();
     }
 
     @Override

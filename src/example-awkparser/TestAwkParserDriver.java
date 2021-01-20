@@ -1,20 +1,19 @@
-package test;
-
+import awk.ParseException;
+import awk.SENTENCE;
 import coverage.SubjectExecutor;
-import rong.CMMParser;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class javaccgrammarDriver extends SubjectExecutor {
+public class TestAwkParserDriver extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        packagePrefix = "rong";
+        packagePrefix = "awk";
         inputFileName = args[0];
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
 
-        new javaccgrammarDriver().wrapExecute();
+        new TestAwkParserDriver().wrapExecute();
     }
 
     @Override
@@ -24,12 +23,12 @@ public class javaccgrammarDriver extends SubjectExecutor {
         }catch (Throwable e){}
     }
 
-    public void stage1_2(String s){
+    public void stage1_2(String s) throws ParseException {
+        //	  s = SymbolicString.makeConcolicString(s);
 //        System.out.println(s);
-        StringReader reader = new StringReader(s);
-        CMMParser parser = new CMMParser(reader);
-        try {
-            parser.procedure();
-        } catch (Exception e) {}
+
+//	  InputStream  inputStream = new ByteArrayInputStream(s.getBytes());
+        SENTENCE sentence = new SENTENCE(new StringReader(s));
+        sentence.Parse();
     }
 }

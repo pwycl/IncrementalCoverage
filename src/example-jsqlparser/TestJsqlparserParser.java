@@ -1,12 +1,9 @@
-package test;
-
 import coverage.SubjectExecutor;
-import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 
 import java.io.IOException;
 
-public class JsqlparserDriver extends SubjectExecutor {
+public class TestJsqlparserParser extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "net.sf.jsqlparser";
@@ -14,7 +11,7 @@ public class JsqlparserDriver extends SubjectExecutor {
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new JsqlparserDriver().wrapExecute();
+        new TestJsqlparserParser().wrapExecute();
 
 //        inputFileName = "src/example-jsqlparser/TestJsqlparserParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
 //        new JsqlparserDriver().wrapExecute();

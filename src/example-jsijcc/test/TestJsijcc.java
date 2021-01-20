@@ -45,7 +45,7 @@ public class TestJsijcc extends Object {
 	}
 
 	private void stage1_2() throws ParseException {
-		String s = "i < 10"; //"var a = 5 for(var i = 0; i < 10;) {} false && true ";
+		String s = "for(var i = 0; i < 10;) {}"; //"var a = 5 for(var i = 0; i < 10;) {} false && true ";
 //		String s = "5 % 3";
 //		s = SymbolicString.makeConcolicString(s);
 		System.out.println(s);

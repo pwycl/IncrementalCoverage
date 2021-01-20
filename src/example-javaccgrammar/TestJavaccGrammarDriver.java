@@ -1,12 +1,10 @@
-package test;
-
 import coverage.SubjectExecutor;
 import rong.CMMParser;
 
 import java.io.IOException;
 import java.io.StringReader;
 
-public class javaccgrammarDriver extends SubjectExecutor {
+public class TestJavaccGrammarDriver extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "rong";
         inputFileName = args[0];
@@ -14,7 +12,7 @@ public class javaccgrammarDriver extends SubjectExecutor {
             isBrief = args[1].equals("1") ? true : false;
         }
 
-        new javaccgrammarDriver().wrapExecute();
+        new TestJavaccGrammarDriver().wrapExecute();
     }
 
     @Override

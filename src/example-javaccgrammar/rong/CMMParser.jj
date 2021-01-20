@@ -198,7 +198,8 @@ Token tk;
     <READ><LPS>tk=<IDENTIFIERS>{
          Symbol tmp = table.getSymbol(tk.image);
          Scanner sc = new Scanner(System.in);
-         tmp.setValue(sc.nextLine());
+         //         tmp.setValue(sc.nextLine());
+         tmp.setValue("System.in");
     }<RPS>";"
 }
 

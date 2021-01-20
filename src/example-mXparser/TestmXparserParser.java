@@ -1,11 +1,9 @@
-package test.mxparser;
-
 import coverage.SubjectExecutor;
 import org.mariuszgromada.math.mxparser.Expression;
 
 import java.io.IOException;
 
-public class mXparserDriver extends SubjectExecutor {
+public class TestmXparserParser extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "org.mariuszgromada.math.mxparser";
@@ -14,7 +12,7 @@ public class mXparserDriver extends SubjectExecutor {
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new mXparserDriver().wrapExecute();
+        new TestmXparserParser().wrapExecute();
 
 //        inputFileName = "src/example-javaparser/TestJavaparserParser.saveInput";
 //        new JavaparserDriver().wrapExecute();

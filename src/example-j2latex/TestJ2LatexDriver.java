@@ -1,5 +1,3 @@
-package test;
-
 import com.github.situx.compiler.parser.C1;
 import com.github.situx.compiler.parser.NullWriter;
 import com.github.situx.compiler.parser.ParseException;
@@ -12,14 +10,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 
-public class J2LatexDriver extends SubjectExecutor {
+public class TestJ2LatexDriver extends SubjectExecutor {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "com.github.situx.compiler";
         inputFileName = args[0];
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new J2LatexDriver().wrapExecute();
+        new TestJ2LatexDriver().wrapExecute();
     }
 
     @Override
