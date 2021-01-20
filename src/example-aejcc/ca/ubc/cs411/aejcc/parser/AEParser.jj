@@ -1,0 +1,72 @@
+/**
+ * JavaCC file
+ */
+
+options {
+  JDK_VERSION = "1.8";
+  STATIC = false; /* Make a REAL OO Parser. Default is true, which creates a hacky static parser */
+}
+
+PARSER_BEGIN(AEParser)
+
+package ca.ubc.cs411.aejcc.parser;
+
+import ca.ubc.cs411.aejcc.ast.*;
+
+public class AEParser {
+}
+
+PARSER_END(AEParser)
+
+SKIP:
+{
+  " "
+| "\n"
+}
+
+TOKEN:
+{
+  <LPAREN : "(">
+| <RPAREN : ")">
+| <ADD: "+">
+| <SUB: "-">
+| <NUM: (["0"-"9"])+>
+}
+
+/* Expects exactly ONE Expression, then end of file. */
+AE OneExpression():
+{
+    AE result;
+}
+{
+    result = Expression() <EOF> { return result; }
+}
+
+AE REPLCmd():
+{
+    AE a;
+}
+{ a=Expression() { return a; }
+  | "exit" { return null; }
+}
+
+
+/* Upon successfully parsing an expression, returns it, leaving the rest of the input stream available */
+AE Expression():
+{
+    Token t;
+    AE a;
+}
+{
+    t=<NUM> { return new Num(Integer.parseInt(t.image)); }
+    | <LPAREN> a=Op() <RPAREN> { return a; }
+}
+
+AE Op():
+{
+    AE lhs, rhs;
+}
+{
+    <ADD> lhs=Expression() rhs=Expression() { return new Add(lhs, rhs); }
+    | <SUB> lhs=Expression() rhs=Expression() { return new Sub(lhs, rhs); }
+}

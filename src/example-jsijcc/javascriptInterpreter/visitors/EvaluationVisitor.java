@@ -280,11 +280,21 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
 
     public JavascriptType visit(ASTmultiplicativeExpression node, Context data){
         //two or more operands
+        JavascriptType resType = node.jjtGetChild(0).jjtAccept(this, data);
         if(node.jjtGetNumChildren() > 1){
-            double result = node.jjtGetChild(0).jjtAccept(this, data).getDouble();
+            double result = 0;
+            if (resType != null){
+                result = resType.getDouble();
+            }
+//            double result = resType.getDouble();
             for(int i = 1; i < node.jjtGetNumChildren(); i++){
                 String nextOperator = ((SimpleNode)node.jjtGetChild(i - 1)).jjtGetLastToken().next.image;
-                double nextOperand = node.jjtGetChild(i).jjtAccept(this, data).getDouble();
+                JavascriptType nextOprType = node.jjtGetChild(i).jjtAccept(this, data);
+                double nextOperand = 0;
+                if (nextOprType != null){
+                    nextOperand = nextOprType.getDouble();
+                }
+//                double nextOperand = nextOprType.getDouble();
                 System.out.print(result + " " + nextOperator + " " + nextOperand + " = ");
                 switch(nextOperator){
                     case "*" :
@@ -303,17 +313,31 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
             }
             return new JavascriptType(result);
         }
-        return node.jjtGetChild(0).jjtAccept(this, data);
+        return resType;
     }
 
     public JavascriptType visit(ASTadditiveExpression node, Context data){
 
         ASTmultiplicativeExpression firstOperand = (ASTmultiplicativeExpression)node.jjtGetChild(0);
+        JavascriptType xType = firstOperand.jjtAccept(this, data);
         if(node.jjtGetNumChildren() > 1){
 //            ASTadditiveExpression secondOperand = (ASTadditiveExpression)node.jjtGetChild(1);
             ASTmultiplicativeExpression secondOperand = (ASTmultiplicativeExpression)node.jjtGetChild(1);
-            double x = firstOperand.jjtAccept(this, data).getDouble();
-            double y = secondOperand.jjtAccept(this, data).getDouble();
+            double x;
+            if (xType == null){
+                x = 0;
+            }else{
+                x = xType.getDouble();
+            }
+//            double x = xType.getDouble();
+            JavascriptType yType = secondOperand.jjtAccept(this, data);
+            double y;
+            if (yType == null){
+                y = 0;
+            }else{
+                y = yType.getDouble();
+            }
+//            double y = yType.getDouble();
             String operator = ((SimpleNode)node.jjtGetChild(0)).jjtGetLastToken().next.image;
             System.out.print(x + " " + operator + " " + y + " = ");
             switch(operator){
@@ -325,7 +349,7 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
                     return new JavascriptType(x - y);
             }
         }
-        return firstOperand.jjtAccept(this, data);
+        return xType;
     }
 
     public JavascriptType visit(ASTshiftExpression node, Context data){
@@ -356,10 +380,24 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
     public JavascriptType visit(ASTrelationalExpression node, Context data){
 
         ASTshiftExpression firstOperand = (ASTshiftExpression)node.jjtGetChild(0);
+        JavascriptType xType = firstOperand.jjtAccept(this, data);
         if(node.jjtGetNumChildren() > 1){
             ASTrelationalExpression secondOperand = (ASTrelationalExpression)node.jjtGetChild(1);
-            double x = firstOperand.jjtAccept(this, data).getDouble();
-            double y = secondOperand.jjtAccept(this, data).getDouble();
+            double x;
+            if (xType == null){
+                x = 0;
+            }else{
+                x = xType.getDouble();
+            }
+
+            JavascriptType yType = secondOperand.jjtAccept(this, data);
+            double y;
+            if (yType == null){
+                y = 0;
+            }else{
+                y = yType.getDouble();
+            }
+//            double y = yType.getDouble();
             String operator = ((SimpleNode)node.jjtGetChild(0)).jjtGetLastToken().next.image;
             System.out.print(x + " " + operator + " " + y + " = ");
             switch(operator){
@@ -383,7 +421,7 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
                     return undefinedObject;
             }
         }
-        return firstOperand.jjtAccept(this, data);
+        return xType;
     }
 
     //todo implement === and !== and add tolerance for double equality
@@ -466,8 +504,13 @@ public class EvaluationVisitor extends JavascriptDefaultVisitor {
         return firstOperand.jjtAccept(this, data);
     }
 
-
+    static int cnt = 0;
+    static int cnt_bound = 1000 * 50;
     public JavascriptType visit(ASTlogicalAndExpression node, Context data){
+        cnt ++ ;
+        if (cnt > cnt_bound){
+            System.exit(-1);
+        }
         ASTbitwiseOrExpression firstOperand = (ASTbitwiseOrExpression)node.jjtGetChild(0);
         if(node.jjtGetNumChildren() > 1){
             ASTlogicalAndExpression secondOperand = (ASTlogicalAndExpression)node.jjtGetChild(1);

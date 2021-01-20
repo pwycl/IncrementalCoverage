@@ -1,0 +1,147 @@
+options {
+    STATIC = false;
+    SUPPORT_CLASS_VISIBILITY_PUBLIC = false;
+}
+
+PARSER_BEGIN(JSON)
+
+import java.io.StringReader;
+import java.io.Reader;
+import java.util.Map;
+import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.ArrayList;
+
+public class JSON {
+
+    public static void main(String args[]) {
+        try
+        {
+              JSON json = new JSON(System.in);
+              Object obj = json.parse();
+			  System.out.println(obj);
+        } catch(Exception e) {
+              e.printStackTrace();
+        }
+    }
+}
+
+PARSER_END(JSON)
+
+SKIP :
+{
+      " " 
+    | "\t" 
+    | "\f"
+    | "\r" 
+    | "\n"
+}
+
+TOKEN :
+{
+      <LBRACE: "{">
+    | <RBRACE: "}">
+    | <LBRACKET: "[">
+    | <RBRACKET: "]">
+    | <COLON: ":">
+    | <COMMA: ",">
+    | <TRUE: "true">
+    | <FALSE: "false">
+    | <NULL: "null">
+    | <NUMBER: (["0"-"9"])+>
+    | <STRING: "\"" (~["\""])* "\"">
+}
+
+Object parse() :
+{
+    Object o;
+}
+{
+    ( o = object()
+    | o = array()
+    )
+    <EOF>
+	{ return o; }
+}
+
+Map<String,Object> object() :
+{
+    Map<String,Object> obj = new HashMap<String,Object>();
+}
+{
+    <LBRACE> [ member(obj) ( <COMMA> member(obj) )*  ] <RBRACE>
+    { return obj; }
+}
+
+List<Object> array() :
+{
+    List<Object> arr = new ArrayList<Object>();
+    Object v;
+}
+{
+    <LBRACKET> [ v = value() { arr.add(v); }  ( <COMMA> v = value() { arr.add(v); } )*  ] <RBRACKET>
+    { return arr; }
+}
+
+void member(Map<String,Object> obj) :
+{
+    Token key;
+    Object value;
+}
+{
+    key = <STRING> <COLON> value = value()
+    { obj.put(key.image.substring(1, key.image.length() - 1), value); } 
+}
+
+Object value() :
+{
+    Object value;
+}
+{
+    ( value = nil() 
+    | value = bool()
+    | value = number()
+    | value = string()
+    | value = object() 
+    | value = array()
+    )
+    { return value; }
+}
+
+String string() :
+{
+    Token t;
+}
+{
+    t = <STRING>
+    { return t.image.substring(1, t.image.length() - 1); }
+}
+
+Boolean bool() :
+{
+}
+{
+    ( <TRUE> 
+      { return Boolean.TRUE; }
+    | <FALSE>
+      { return Boolean.FALSE; }
+    )
+}
+
+Object nil() :
+{
+}
+{
+    <NULL>
+    { return null; }
+}
+
+Number number() :
+{
+    Token t;
+}
+{
+    t = <NUMBER>
+    { return Integer.valueOf(t.image); }
+}

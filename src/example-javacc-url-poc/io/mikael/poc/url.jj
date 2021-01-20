@@ -1,0 +1,118 @@
+options {
+   JDK_VERSION = "1.7";
+   STATIC = false;
+   LOOKAHEAD = 4;
+   FORCE_LA_CHECK = true;
+}
+
+PARSER_BEGIN(UrlParser)
+
+package io.mikael.poc;
+
+import java.io.StringReader;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.google.common.base.Supplier;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimaps;
+
+public class UrlParser {
+
+    public static class Result {
+        public String schema, username, password, host, port, path, fragment;
+        public Multimap<String, String> queryParameters;
+        @Override
+        public String toString() {
+            return String.format("%s / %s / %s / %-6s / %5s / %8s / %-22s / %s",
+                schema, username, password, host, port, path, queryParameters, fragment);
+        }
+    }
+
+    private static final Supplier newList = new Supplier() {
+        @Override
+        public Object get() {
+            return new ArrayList<String>();
+        }
+    };
+
+    public static Result parse(final String input) throws ParseException {
+        return new UrlParser(new StringReader(input)).parse();
+    }
+
+}
+
+PARSER_END(UrlParser)
+
+TOKEN: {
+    <URL_SCHEMA: "http" | "https" | "ftp"> |
+    <WORD: (["a"-"z", "0"-"9" , "_"])+ > |
+    <INT: (["0"-"9"])+ >
+}
+
+Result parse():
+{
+    Result ret = new Result();
+}
+{
+    (
+      ret.schema=<URL_SCHEMA>.image
+      ":"
+    )?
+
+    ( "//"
+
+      (
+        ret.username=<WORD>.image
+        ":"
+        ret.password=<WORD>.image
+        "@"
+      )?
+
+      ret.host=<WORD>.image
+    )?
+
+    ( ":"
+      ret.port=<WORD>.image
+    )?
+
+    ( "/"
+      ret.path=<WORD>.image
+    )?
+
+    ( "?"
+      ret.queryParameters=queryParameters()
+    )?
+
+    ( "#"
+      "/a_fragment"
+    )?
+
+    {
+        return ret;
+    }
+}
+
+ListMultimap<String, String> queryParameters():
+{
+    ListMultimap<String, String> ret = Multimaps.newListMultimap(
+            new ConcurrentHashMap<String, Collection<String>>(), newList);
+    Token key = null, value = null;
+}
+{
+    (
+        key=<WORD> "=" value=<WORD>
+        { ret.put(key.image, value.image); }
+    )
+
+    ( "&"
+        key=<WORD> "=" value=<WORD>
+        { ret.put(key.image, value.image); }
+    )*
+
+    { return ret; }
+}

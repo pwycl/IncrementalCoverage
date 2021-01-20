@@ -4,7 +4,6 @@ import hirondelle.formula.eval.JavaCharStream;
 import hirondelle.formula.eval.MathematicalExpression;
 import hirondelle.formula.eval.MathematicalExpressionConstants;
 import hirondelle.formula.eval.MathematicalExpressionTokenManager;
-import hirondelle.formula.eval.ParseException;
 import hirondelle.formula.eval.Token;
 import hirondelle.formula.eval.TokenMgrError;
 import hirondelle.formula.function.Function;
@@ -51,7 +50,20 @@ public final class Formula {
    This constructor can only be used when there are no variables in the formula.
   */
   public Formula(String aFormula){
-    this(aFormula, new LinkedHashMap<String, Decimal>(), getDefaultFunctions());
+    if (aFormula == null || aFormula.trim().length() == 0){
+      throw new IllegalArgumentException("Formula has no content.");
+    }
+    fFormula = aFormula;
+    fVariableValues = new LinkedHashMap<String, Decimal>();
+    fNamesAllVariables = getNamesFor(MathematicalExpressionConstants.VARIABLE);
+    fNamesUnpopulatedVariables = listUnpopulatedVariableNames();
+
+  }
+
+  public void stage3() {
+    fCustomFunctions = getDefaultFunctions();
+    fNamesAllFunctions = stripLastCharacter(getNamesFor(MathematicalExpressionConstants.FUNCTION));
+    fNamesUnknownFunctions = listUnknownFunctionNames();
   }
 
   /**
@@ -79,10 +91,8 @@ public final class Formula {
     fVariableValues = aVariableValues;
     fNamesAllVariables = getNamesFor(MathematicalExpressionConstants.VARIABLE);
     fNamesUnpopulatedVariables = listUnpopulatedVariableNames();
-    
-    fCustomFunctions = aCustomFunctions;
-    fNamesAllFunctions = stripLastCharacter(getNamesFor(MathematicalExpressionConstants.FUNCTION));
-    fNamesUnknownFunctions = listUnknownFunctionNames();
+
+    stage3();
   }
   
   /** 
@@ -169,14 +179,14 @@ public final class Formula {
    not in the Map of functions passed to the constructor.
   */
   public Decimal getAnswer() throws MalformedFormulaException {
-    Date EXPIRY_DATE = new Date(118, 10, 15); //year - 1900, 0-based month. 
-    //Date EXPIRY_DATE = null;
-    if (EXPIRY_DATE != null){
-      Date now = new Date();
-      if (now.after(EXPIRY_DATE)){
-        throw new RuntimeException("The trial formula4j.jar is now passed its expiry date: " + EXPIRY_DATE);
-      }
-    }
+//    Date EXPIRY_DATE = new Date(118, 10, 15); //year - 1900, 0-based month.
+//    //Date EXPIRY_DATE = null;
+//    if (EXPIRY_DATE != null){
+//      Date now = new Date();
+//      if (now.after(EXPIRY_DATE)){
+//        throw new RuntimeException("The trial formula4j.jar is now passed its expiry date: " + EXPIRY_DATE);
+//      }
+//    }
     
     Decimal result = null;
     
@@ -202,9 +212,9 @@ public final class Formula {
   private final List<String> fNamesUnpopulatedVariables;
   private final List<String> fNamesAllVariables;
   
-  private final Map<String, Function> fCustomFunctions;
-  private final List<String> fNamesUnknownFunctions;
-  private final List<String> fNamesAllFunctions;
+  private Map<String, Function> fCustomFunctions;
+  private List<String> fNamesUnknownFunctions;
+  private List<String> fNamesAllFunctions;
   
   private List<String> getNamesFor(int aType){
     List<String> result = new ArrayList<String>();
