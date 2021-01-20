@@ -1,13 +1,9 @@
 package test;
 
-import java.io.IOException;
-import java.io.StringReader;
-
 import parser.JSON;
 import parser.ParseException;
-import gov.nasa.jpf.jdart.Debug;
-import gov.nasa.jpf.jdart.SymbolicString;
-import parser.*;
+
+import java.io.StringReader;
 
 public class TestJsonRaupachz {
 	public static void main(String[] args){
@@ -21,15 +17,15 @@ public class TestJsonRaupachz {
         "\"owner_id\": 2,\"id\": 2,\"suspended\": false, " +
         "\"time_zone\": \"International Date Line West\",\"plan_id\": 24}}";
 
-	    s = SymbolicString.makeConcolicString(s); 
+//	    s = SymbolicString.makeConcolicString(s);
 	    StringReader sr = new StringReader(s);
-		System.out.println(s);
+//		System.out.println(s);
 		JSON json = new JSON(sr);
         try {
 			Object obj = json.parse();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }

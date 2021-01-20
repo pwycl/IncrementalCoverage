@@ -1,12 +1,10 @@
 package test;
 
-import gov.nasa.jpf.jdart.SymbolicString;
+import com.braxisltd.calculator.ArithmeticParser;
+import com.braxisltd.calculator.ParseException;
+import com.braxisltd.calculator.Value;
 
-import java.io.IOException;
 import java.io.StringReader;
-import gov.nasa.jpf.jdart.Debug;
-import gov.nasa.jpf.jdart.SymbolicString;
-import com.braxisltd.calculator.*;
 
 public class TestJavaccCalculator {
 
@@ -17,8 +15,8 @@ public class TestJavaccCalculator {
 	}
 	public void start(){
 		stage1_2();
-		Debug.setValidInputTrue();
-		Debug.prepareForStage3();
+//		Debug.setValidInputTrue();
+//		Debug.prepareForStage3();
 		stage3();
 	}
 
@@ -29,9 +27,9 @@ public class TestJavaccCalculator {
 	private void stage1_2() {
 		String s= "999 + 1.0";
 
-		s = SymbolicString.makeConcolicString(s);
+//		s = SymbolicString.makeConcolicString(s);
 		StringReader sr = new StringReader(s);
-		System.out.println(s);
+//		System.out.println(s);
 		parser = new ArithmeticParser(sr);
 		try {
 			parser.parse();

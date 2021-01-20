@@ -1,6 +1,5 @@
 package test;
 
-import gov.nasa.jpf.jdart.SymbolicString;
 import html.parser.ParseException;
 import html.parser.test;
 
@@ -16,7 +15,7 @@ public class TestHtmlParser {
 		        + "test"
 	            + "</body></html>";
 	    
-	    s = SymbolicString.makeConcolicString(s);
+//	    s = SymbolicString.makeConcolicString(s);
 	    StringReader sr = new StringReader(s);
 		System.out.println(s);
 	    test parser = new test(sr);

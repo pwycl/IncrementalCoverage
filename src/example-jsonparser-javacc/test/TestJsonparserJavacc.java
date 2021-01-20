@@ -21,13 +21,11 @@ package test;
  * Contributor(s): none.
  *========================================================================*/
 
-import java.io.*;
-
 import jsonparser.JSONObject;
 import jsonparser.JSONParser;
 import jsonparser.ParseException;
-import gov.nasa.jpf.jdart.Debug;
-import gov.nasa.jpf.jdart.SymbolicString;
+
+import java.io.StringReader;
 
 public class TestJsonparserJavacc extends Object {
 
@@ -38,14 +36,14 @@ public class TestJsonparserJavacc extends Object {
 	private void start() {
 		String jsonstr = "{\"firstName\": \"John\",     \"lastName\": \"Smith\",     \"sex\": \"third\",     \"age\": 25     }";
 		
-		jsonstr = SymbolicString.makeConcolicString(jsonstr);
-		System.out.println(jsonstr);
+//		jsonstr = SymbolicString.makeConcolicString(jsonstr);
+//		System.out.println(jsonstr);
 		StringReader sr = new StringReader(jsonstr);
 		
 		try {
 			JSONObject res = JSONParser.parse(sr);
 		} catch (ParseException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }
