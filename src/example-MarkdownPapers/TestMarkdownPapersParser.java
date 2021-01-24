@@ -8,7 +8,7 @@ import org.tautua.markdownpapers.parser.Parser;
 import java.io.IOException;
 import java.io.StringReader;
 
-public class TestMDPParser extends SubjectExecutor {
+public class TestMarkdownPapersParser extends SubjectExecutor {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         packagePrefix = "org.tautua.markdownpapers";
@@ -16,7 +16,7 @@ public class TestMDPParser extends SubjectExecutor {
         if (args.length > 1){
             isBrief = args[1].equals("1") ? true : false;
         }
-        new TestMDPParser().wrapExecute();
+        new TestMarkdownPapersParser().wrapExecute();
 
 //        inputFileName = "src/example-MarkdownPapers/TestMDPParser-TokenSymb-genTokenString-TokenLengthBound3.saveInput";
 //        new MarkdownPapersDriver().wrapExecute();
